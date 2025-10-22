@@ -1,0 +1,49 @@
+# ide
+.classpath
+.project
+.settings
+.metadata
+.recommenders
+RemoteSystemsTempFiles
+Servers
+eclipsebin
+.idea
+.fleet
+*.iml
+*.ipr
+*.iws
+.git
+
+# build
+classes
+*.class
+target
+*/target
+pom.xml.*
+out/
+build
+.gradle
+local.properties
+gradle-local.properties
+release.properties
+
+# jrebel
+rebel.xml
+rebel-remote.xml
+
+# run
+logs/
+*.log
+hs_err_pid*
+
+# others
+.DS_Store
+
+# custom
+_backup
+application-*.properties
+*/bin/main
+*/*/bin/main
+*/bin/test
+*/*/bin/test
+.vscode
