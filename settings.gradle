@@ -1,1 +1,6 @@
 rootProject.name = 'enroll-pro-microservice'
+include 'enroll-pojo'
+include 'enroll-auth'
+include 'enroll-spi'
+include 'enroll-framework'
+include 'enroll-gateway'
