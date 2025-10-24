@@ -24,7 +24,8 @@ A customizable registration system suitable for exam registration systems, event
 - Deployment: Docker, Docker-compose
 
 Note: For the frontend-backend separated monolithic application, please visit [enroll-pro](https://github.com/Gao-Ge-Ryan/enroll-pro)
-
+## User Manual
+[Enroll Pro User Manual V1.0](./Enroll%20Pro%20可定制化报名系统用户手册V1.0.pdf)
 
 ## Quick Start
 

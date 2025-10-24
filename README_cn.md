@@ -34,6 +34,8 @@
 - 运行内存 > 4G
 - 部署依赖软件 = docker、docker-compose
 
+## 用户手册
+[Enroll Pro 用户手册V1.0](./Enroll%20Pro%20可定制化报名系统用户手册V1.0.pdf)
 ### 启动运行
 
 首先，进入根目录下deploy下执行以下命令：
