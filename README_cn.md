@@ -21,7 +21,7 @@
 - 数据库：Mysql:8.0.21、Redis:latest
 - 部署: Docker、Docker-compose
 
-（注：微服务版本，请移步 [enroll-pro-microservice](https://github.com/Gao-Ge-Ryan/enroll-pro-microservice)）
+（注：前后端分离单体应用，请移步 [enroll-pro](https://github.com/Gao-Ge-Ryan/enroll-pro)）
 
 ## 快速开始
 
