@@ -17,7 +17,7 @@ A customizable registration system suitable for exam registration systems, event
 
 ### System Architecture
 
-- Backend: Java 8, SpringBoot 2.5.15, Mybatis, Gradle, Minio.
+- Backend: Java 8, SpringBoot 2.5.15, SpringCloud, SpringCloudAlibaba, Mybatis, Gradle, Minio.
 - Frontend: Vue 3.
 - Database: Mysql 8.0.21, Redis (latest).
 - Requires zero changes to existing programs.
