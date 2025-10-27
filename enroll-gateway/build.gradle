@@ -1,19 +1,6 @@
-plugins {
-    id 'java'
-}
-
-group = 'top.gaogle'
-version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
 
-test {
-    useJUnitPlatform()
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:' + project.dependencyVersions.alicloud
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:' + project.dependencyVersions.alicloud
+
 }

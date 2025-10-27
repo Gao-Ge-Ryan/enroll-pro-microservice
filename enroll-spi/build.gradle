@@ -1,0 +1,7 @@
+subprojects {
+    dependencies {
+        implementation project(':enroll-pojo')
+        api 'org.springframework.cloud:spring-cloud-starter-openfeign:' + project.dependencyVersions.springcloud
+    }
+
+}

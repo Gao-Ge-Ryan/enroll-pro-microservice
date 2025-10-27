@@ -8,3 +8,4 @@ include 'enroll-gateway'
 
 include 'enroll-spi'
 include 'enroll-spi:auth'
+include 'enroll-file'

@@ -6,6 +6,10 @@ ext {
     moduleProjects = subprojects.findAll { (it.name.startsWith('enroll')) }
     javaProjects = subprojects + rootProject
     dependencyVersions = [
+            springboot: '2.6.1',
+            springcloud: '3.1.0',
+            alicloud: '2021.1',
+
             elasticsearch : '7.14.0',
             mysqlConnector: '8.0.21',
             mybatis: '2.3.1',
