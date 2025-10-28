@@ -20,7 +20,7 @@ ext {
 configure(allprojects) { project ->
     buildscript {
         ext {
-            springBootVersion = '2.5.15'
+            springBootVersion = '2.6.1'
         }
         repositories {
             maven { url 'https://maven.aliyun.com/repository/public' }

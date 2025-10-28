@@ -3,4 +3,11 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:' + project.dependencyVersions.alicloud
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:' + project.dependencyVersions.alicloud
 
+    implementation 'org.springframework.boot:spring-boot:' + project.dependencyVersions.springboot
+    implementation 'org.springframework.boot:spring-boot-starter:' + project.dependencyVersions.springboot
+    implementation 'org.springframework.boot:spring-boot-starter-web:' + project.dependencyVersions.springboot
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:' + project.dependencyVersions.springboot
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:' + project.dependencyVersions.springcloud
+
 }

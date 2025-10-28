@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: enroll-gateway
+  cloud:
+    nacos:
+      discovery:
+        discovery: true
+        server-addr: 127.0.0.1:8848
+        namespace: enroll-pro
+        group: DEFAULT_GROUP
+        username: nacos
+        password: nacos
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: enroll-pro
+        group: DEFAULT_GROUP
+        username: nacos
+        password: nacos
+        file-extension: yml
