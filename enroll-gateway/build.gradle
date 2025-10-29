@@ -5,9 +5,10 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot:' + project.dependencyVersions.springboot
     implementation 'org.springframework.boot:spring-boot-starter:' + project.dependencyVersions.springboot
-    implementation 'org.springframework.boot:spring-boot-starter-web:' + project.dependencyVersions.springboot
     implementation 'org.springframework.boot:spring-boot-starter-webflux:' + project.dependencyVersions.springboot
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:' + project.dependencyVersions.springcloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway:' + project.dependencyVersions.springcloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer:' + project.dependencyVersions.springcloud
 
 }

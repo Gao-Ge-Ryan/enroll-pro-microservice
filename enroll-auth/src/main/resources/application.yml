@@ -1,6 +1,6 @@
 spring:
   application:
-    name: enroll-gateway
+    name: enroll-auth
   cloud:
     nacos:
       discovery:
@@ -16,13 +16,6 @@ spring:
         username: nacos
         password: nacos
         file-extension: yml
-    gateway:
-      routes:
-        - id: auth-route
-          uri: lb://enroll-auth
-          predicates:
-            - Path=/auth/**
-          filters:
-            - StripPrefix=1
+
 server:
-  port: 8080
+  port: 8081
