@@ -1,5 +1,6 @@
 dependencies {
     implementation project(':enroll-pojo')
+    implementation project(':enroll-spi:auth')
 
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:' + project.dependencyVersions.alicloud
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:' + project.dependencyVersions.alicloud
