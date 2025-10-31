@@ -3,11 +3,18 @@ include 'enroll-pojo'
 include 'enroll-auth'
 
 include 'enroll-framework'
+include 'enroll-framework:enums'
+include 'enroll-framework:commons'
+
+
 include 'enroll-gateway'
 
 
 include 'enroll-spi'
 include 'enroll-spi:auth'
+
+
 include 'enroll-file'
 include 'enroll-register'
 include 'enroll-bill'
+
