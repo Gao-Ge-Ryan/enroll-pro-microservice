@@ -2,12 +2,12 @@ dependencies {
     implementation project(':enroll-pojo')
     implementation project(':enroll-spi:auth')
 
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:' + project.dependencyVersions.alicloud
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:' + project.dependencyVersions.alicloud
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
 
-    implementation 'org.springframework.boot:spring-boot:' + project.dependencyVersions.springboot
-    implementation 'org.springframework.boot:spring-boot-starter:' + project.dependencyVersions.springboot
-    implementation 'org.springframework.boot:spring-boot-starter-web:' + project.dependencyVersions.springboot
+    implementation 'org.springframework.boot:spring-boot'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:' + project.dependencyVersions.springcloud
 }

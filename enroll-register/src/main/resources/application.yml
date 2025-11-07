@@ -1,6 +1,8 @@
 spring:
   application:
     name: enroll-register
+  config:
+    import: nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
   cloud:
     nacos:
       discovery:
