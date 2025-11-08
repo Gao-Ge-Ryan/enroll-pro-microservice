@@ -1,3 +1,4 @@
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:' + project.dependencyVersions.pagehelper
 }

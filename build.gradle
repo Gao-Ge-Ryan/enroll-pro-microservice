@@ -12,11 +12,8 @@ ext {
             mybatis: '2.3.1',
             easyexcel: '4.0.3',
             pagehelper: '1.4.7',
-
-            elasticsearch : '7.14.0',
-            mysqlConnector: '8.0.21',
-
-
+            druid: '1.2.23',
+            commons: '3.13.0',
     ]
 }
 
