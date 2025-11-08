@@ -1,5 +1,6 @@
 dependencies {
     implementation project(':enroll-pojo')
+    implementation project(':enroll-framework:commons')
     implementation project(':enroll-framework:mybatis')
 
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
