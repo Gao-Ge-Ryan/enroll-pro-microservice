@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.Enterprise;
+import top.gaogle.entity.register.Enterprise;
 
 public class EnterpriseModel extends Enterprise {
 

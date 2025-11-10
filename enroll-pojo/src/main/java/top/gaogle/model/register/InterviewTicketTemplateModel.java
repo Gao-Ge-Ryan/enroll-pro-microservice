@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.InterviewTicketTemplate;
+import top.gaogle.entity.register.InterviewTicketTemplate;
 
 public class InterviewTicketTemplateModel extends InterviewTicketTemplate {
 }

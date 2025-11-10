@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.ActivityInfo;
+import top.gaogle.entity.register.ActivityInfo;
 
 import java.math.BigDecimal;
 

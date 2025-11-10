@@ -1,7 +1,7 @@
 package top.gaogle.param.register;
 
 
-import top.gaogle.domain.register.User;
+import top.gaogle.entity.register.User;
 import top.gaogle.pojo.SuperQuerying;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package top.gaogle.model.register;
 
 
-import top.gaogle.domain.register.PublishSpot;
+import top.gaogle.entity.register.PublishSpot;
 
 public class PublishSpotModel extends PublishSpot {
 

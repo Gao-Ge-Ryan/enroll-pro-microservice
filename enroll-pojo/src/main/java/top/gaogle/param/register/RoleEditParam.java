@@ -1,7 +1,7 @@
 package top.gaogle.param.register;
 
 
-import top.gaogle.domain.register.Role;
+import top.gaogle.entity.register.Role;
 import top.gaogle.enums.auth.AuthorityEnum;
 
 import java.util.List;

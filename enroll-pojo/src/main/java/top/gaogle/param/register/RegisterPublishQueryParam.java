@@ -1,7 +1,7 @@
 package top.gaogle.param.register;
 
 
-import top.gaogle.domain.register.RegisterPublish;
+import top.gaogle.entity.register.RegisterPublish;
 import top.gaogle.pojo.SuperQuerying;
 
 public class RegisterPublishQueryParam extends RegisterPublish implements SuperQuerying {

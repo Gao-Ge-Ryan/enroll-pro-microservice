@@ -1,7 +1,7 @@
 package top.gaogle.model.register;
 
 
-import top.gaogle.domain.register.User;
+import top.gaogle.entity.register.User;
 
 import java.util.List;
 

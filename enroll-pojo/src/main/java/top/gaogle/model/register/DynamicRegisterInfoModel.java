@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.DynamicRegisterInfo;
+import top.gaogle.entity.register.DynamicRegisterInfo;
 
 import java.util.List;
 

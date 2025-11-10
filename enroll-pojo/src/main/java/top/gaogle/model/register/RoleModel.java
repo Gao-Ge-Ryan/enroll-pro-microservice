@@ -1,7 +1,7 @@
 package top.gaogle.model.register;
 
 
-import top.gaogle.domain.register.Role;
+import top.gaogle.entity.register.Role;
 
 public class RoleModel extends Role {
     private Boolean authorized = false;

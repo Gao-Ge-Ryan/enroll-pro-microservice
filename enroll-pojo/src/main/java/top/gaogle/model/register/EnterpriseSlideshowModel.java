@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.EnterpriseSlideshow;
+import top.gaogle.entity.register.EnterpriseSlideshow;
 
 public class EnterpriseSlideshowModel extends EnterpriseSlideshow {
 }

@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.RegisterPublish;
+import top.gaogle.entity.register.RegisterPublish;
 
 import java.util.List;
 

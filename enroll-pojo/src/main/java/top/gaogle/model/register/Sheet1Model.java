@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.Sheet1;
+import top.gaogle.entity.register.Sheet1;
 
 public class Sheet1Model extends Sheet1 {
     private String type;

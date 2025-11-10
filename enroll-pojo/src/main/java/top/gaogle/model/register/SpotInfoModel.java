@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.SpotInfo;
+import top.gaogle.entity.register.SpotInfo;
 
 public class SpotInfoModel extends SpotInfo {
 }

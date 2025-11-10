@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.Comment;
+import top.gaogle.entity.register.Comment;
 
 import java.util.List;
 

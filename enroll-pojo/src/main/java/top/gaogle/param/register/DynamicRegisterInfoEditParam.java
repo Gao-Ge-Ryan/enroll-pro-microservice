@@ -1,7 +1,7 @@
 package top.gaogle.param.register;
 
 
-import top.gaogle.domain.register.DynamicRegisterInfo;
+import top.gaogle.entity.register.DynamicRegisterInfo;
 
 import java.math.BigDecimal;
 import java.util.Map;

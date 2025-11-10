@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.RegisterPublishAnnouncement;
+import top.gaogle.entity.register.RegisterPublishAnnouncement;
 
 public class RegisterPublishAnnouncementModel extends RegisterPublishAnnouncement {
 }

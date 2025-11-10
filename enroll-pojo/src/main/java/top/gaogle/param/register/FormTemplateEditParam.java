@@ -1,6 +1,6 @@
 package top.gaogle.param.register;
 
-import top.gaogle.domain.register.FormTemplate;
+import top.gaogle.entity.register.FormTemplate;
 
 public class FormTemplateEditParam extends FormTemplate {
 }

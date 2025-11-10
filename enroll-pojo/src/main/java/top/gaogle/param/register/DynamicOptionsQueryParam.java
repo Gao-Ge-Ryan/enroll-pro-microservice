@@ -1,7 +1,7 @@
 package top.gaogle.param.register;
 
 
-import top.gaogle.domain.register.DynamicOptions;
+import top.gaogle.entity.register.DynamicOptions;
 
 public class DynamicOptionsQueryParam extends DynamicOptions {
 }

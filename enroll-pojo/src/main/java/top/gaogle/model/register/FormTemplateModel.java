@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.FormTemplate;
+import top.gaogle.entity.register.FormTemplate;
 
 public class FormTemplateModel extends FormTemplate {
 }

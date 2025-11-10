@@ -1,6 +1,6 @@
 package top.gaogle.model.register;
 
-import top.gaogle.domain.register.AlipaySecret;
+import top.gaogle.entity.register.AlipaySecret;
 
 public class AlipaySecretModel extends AlipaySecret {
 
