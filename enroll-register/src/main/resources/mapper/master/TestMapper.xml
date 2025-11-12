@@ -19,7 +19,7 @@
         , name,age, price,create_by,create_at,update_by,update_at
     </sql>
     <insert id="insert">
-        insert into test_auth(<include refid="sqlAllColumns"/>)
+        insert into test_register(<include refid="sqlAllColumns"/>)
         values
         (#{id},#{name},#{age},#{price},#{createBy},#{createAt},#{updateBy},#{updateAt})
     </insert>

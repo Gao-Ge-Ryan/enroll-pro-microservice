@@ -98,6 +98,5 @@ seata:
       username: nacos
       password: nacos
       application: seata-server
-      cluster: default
 server:
   port: 8082

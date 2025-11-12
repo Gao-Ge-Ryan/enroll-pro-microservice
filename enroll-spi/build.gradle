@@ -1,7 +1,9 @@
 subprojects {
     dependencies {
         implementation project(':enroll-pojo')
+        implementation project(':enroll-framework:commons')
         api 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        api 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     }
 
 }

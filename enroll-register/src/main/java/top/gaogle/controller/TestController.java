@@ -1,22 +1,30 @@
 package top.gaogle.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.gaogle.i18n.I18nResult;
+import top.gaogle.service.TestService;
 
 /**
- * 用户管理
- *
  * @author gaogle
  * @since 1.0.0
  */
 @RestController
 @RequestMapping("/test")
 public class TestController {
+
+    private final TestService testService;
+
+    @Autowired
+    public TestController(TestService testService) {
+        this.testService = testService;
+    }
+
     @GetMapping
-    public String test() {
-        System.out.println("sssssssssssssssss=====ssssssss");
-        return "hello world=============";
+    public I18nResult<String> insert() {
+        return testService.test();
     }
 
 }

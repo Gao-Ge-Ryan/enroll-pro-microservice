@@ -1,7 +1,6 @@
 package top.gaogle.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +23,8 @@ public class TestController {
     }
 
     @GetMapping
-    public ResponseEntity<I18nResult<String>> test() {
-        return testService.test().toResponseEntity();
+    public I18nResult<String> insert() {
+        return testService.test();
     }
 
 }
