@@ -27,4 +27,9 @@ public class TestController {
         return testService.test();
     }
 
+    @GetMapping("/tcc")
+    public I18nResult<String> tcc() {
+        return testService.tcc();
+    }
+
 }

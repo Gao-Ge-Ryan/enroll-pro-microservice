@@ -10,4 +10,7 @@ public interface TestFeign {
     @GetMapping("/test")
     I18nResult<String> insert();
 
+    @GetMapping("/test/tcc")
+    I18nResult<String> tcc();
+
 }

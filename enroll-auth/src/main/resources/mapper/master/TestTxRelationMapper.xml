@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.gaogle.dao.master.TestTxRelationMapper">
+    <resultMap type="top.gaogle.model.auth.TestTxRelationModel" id="TestTxRelationMap">
+        <result property="testId" column="test_id" jdbcType="VARCHAR"/>
+        <result property="txId" column="tx_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="sqlAllColumns">
+        test_id
+        , tx_id
+    </sql>
+    <insert id="insert">
+        insert into test_tx_relation(<include refid="sqlAllColumns"/>)
+        values
+        (#{testId},#{txId})
+    </insert>
+
+    <delete id="deleteByTxId">
+        delete
+        from test_tx_relation
+        where tx_id = #{txId}
+    </delete>
+    <select id="selectByTxId" resultMap="TestTxRelationMap">
+        select
+        <include refid="sqlAllColumns"/>
+        from test_tx_relation where tx_id = #{txId}
+    </select>
+
+
+</mapper>
