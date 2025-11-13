@@ -37,15 +37,17 @@ public class TestTCCImpl extends SuperService implements TestTCC {
         txRelationEditParam.setTestId(editParam.getId());
         txRelationEditParam.setTxId(xid);
         testTxRelationMapper.insert(txRelationEditParam);
+
         result.succeed().setData("test");
         return result;
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+//    @Transactional(rollbackFor = Exception.class)
     public Boolean commitTest(BusinessActionContext context) {
         log.info("TCC提交成功, XID={}, editParam={}", context.getXid(), context.getActionContext("editParam"));
         testTxRelationMapper.deleteByTxId(context.getXid());
+//        int i = 1/0;
         return true;
     }
 

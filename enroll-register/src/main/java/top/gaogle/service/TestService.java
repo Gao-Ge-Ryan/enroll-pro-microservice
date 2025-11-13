@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.gaogle.TestFeign;
 import top.gaogle.dao.master.TestMapper;
+import top.gaogle.dao.slave.TestSlaveMapper;
 import top.gaogle.i18n.I18nResult;
 import top.gaogle.param.auth.TestEditParam;
 import top.gaogle.util.UniqueUtil;
@@ -15,11 +16,13 @@ public class TestService extends SuperService {
 
     private final TestMapper testMapper;
     private final TestFeign testFeign;
+    private final TestSlaveMapper testSlaveMapper;
 
     @Autowired
-    public TestService(TestMapper testMapper, TestFeign testFeign) {
+    public TestService(TestMapper testMapper, TestFeign testFeign, TestSlaveMapper testSlaveMapper) {
         this.testMapper = testMapper;
         this.testFeign = testFeign;
+        this.testSlaveMapper = testSlaveMapper;
     }
 
     @GlobalTransactional(rollbackFor = Exception.class)
@@ -68,6 +71,9 @@ public class TestService extends SuperService {
             }
             testMapper.insert(editParam);
             I18nResult<String> tcc = testFeign.tcc();
+            editParam.setName("ssssssssssssssssssssssss");
+            testSlaveMapper.insert(editParam);
+
             int i = 1 / 0;
             result.succeed().setData("test");
         } catch (Exception e) {
