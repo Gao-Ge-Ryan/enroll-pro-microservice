@@ -20,3 +20,5 @@ include 'enroll-register'
 include 'enroll-bill'
 
 
+include 'enroll-framework:security'
+include 'enroll-framework:feign'

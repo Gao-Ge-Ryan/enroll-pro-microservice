@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.gaogle.dao.master.TestTxRelationMapper">
-    <resultMap type="top.gaogle.model.auth.TestTxRelationModel" id="TestTxRelationMap">
+<mapper namespace="top.gaogle.auth.dao.master.TestTxRelationMapper">
+    <resultMap type="top.gaogle.pojo.model.auth.TestTxRelationModel" id="TestTxRelationMap">
         <result property="testId" column="test_id" jdbcType="VARCHAR"/>
         <result property="txId" column="tx_id" jdbcType="VARCHAR"/>
     </resultMap>

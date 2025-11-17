@@ -3,7 +3,6 @@ dependencies {
     implementation project(':enroll-framework:commons')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
-    implementation 'org.apache.commons:commons-lang3:' + project.dependencyVersions.commons
     api 'org.mybatis.spring.boot:mybatis-spring-boot-starter:' + project.dependencyVersions.mybatis
     api 'mysql:mysql-connector-java:' + project.dependencyVersions.mysqlConnector
     api 'com.alibaba:druid-spring-boot-starter:' + project.dependencyVersions.druid
