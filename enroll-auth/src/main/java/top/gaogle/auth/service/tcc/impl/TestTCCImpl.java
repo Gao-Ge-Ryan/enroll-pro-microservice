@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.gaogle.auth.dao.master.TestMapper;
 import top.gaogle.auth.dao.master.TestTxRelationMapper;
+import top.gaogle.auth.service.tcc.TestTCC;
 import top.gaogle.framework.commons.i18n.I18nResult;
+import top.gaogle.framework.commons.service.SuperService;
 import top.gaogle.pojo.model.auth.TestTxRelationModel;
 import top.gaogle.pojo.param.auth.TestEditParam;
 import top.gaogle.pojo.param.auth.TestTxRelationEditParam;
-import top.gaogle.framework.commons.service.SuperService;
-import top.gaogle.auth.service.tcc.TestTCC;
 
 @Service
 public class TestTCCImpl extends SuperService implements TestTCC {
