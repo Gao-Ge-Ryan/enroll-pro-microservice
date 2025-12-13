@@ -6,6 +6,7 @@ import feign.RequestTemplate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import top.gaogle.framework.commons.common.CommonsConst;
+import top.gaogle.framework.commons.common.SecurityConstants;
 import top.gaogle.framework.commons.util.IpUtil;
 import top.gaogle.framework.commons.util.ServletUtil;
 import top.gaogle.framework.commons.util.StringUtil;
@@ -26,21 +27,21 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         if (StringUtil.isNotNull(httpServletRequest)) {
             Map<String, String> headers = ServletUtil.getHeaders(httpServletRequest);
             // 传递用户信息请求头，防止丢失
-            String userId = headers.get(CommonsConst.DETAILS_USER_ID);
+            String userId = headers.get(SecurityConstants.DETAILS_USER_ID);
             if (StringUtils.isNotEmpty(userId)) {
-                requestTemplate.header(CommonsConst.DETAILS_USER_ID, userId);
+                requestTemplate.header(SecurityConstants.DETAILS_USER_ID, userId);
             }
-            String userKey = headers.get(CommonsConst.USER_KEY);
+            String userKey = headers.get(SecurityConstants.USER_KEY);
             if (StringUtils.isNotEmpty(userKey)) {
-                requestTemplate.header(CommonsConst.USER_KEY, userKey);
+                requestTemplate.header(SecurityConstants.USER_KEY, userKey);
             }
-            String userName = headers.get(CommonsConst.DETAILS_USERNAME);
+            String userName = headers.get(SecurityConstants.DETAILS_USERNAME);
             if (StringUtils.isNotEmpty(userName)) {
-                requestTemplate.header(CommonsConst.DETAILS_USERNAME, userName);
+                requestTemplate.header(SecurityConstants.DETAILS_USERNAME, userName);
             }
-            String authentication = headers.get(CommonsConst.AUTHORIZATION_HEADER);
+            String authentication = headers.get(SecurityConstants.AUTHORIZATION_HEADER);
             if (StringUtils.isNotEmpty(authentication)) {
-                requestTemplate.header(CommonsConst.AUTHORIZATION_HEADER, authentication);
+                requestTemplate.header(SecurityConstants.AUTHORIZATION_HEADER, authentication);
             }
 
             // 配置客户端IP

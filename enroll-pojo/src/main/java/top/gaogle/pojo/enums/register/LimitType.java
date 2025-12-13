@@ -3,7 +3,7 @@ package top.gaogle.pojo.enums.register;
 /**
  * 限流类型
  *
- * @author ruoyi
+ * @author gaogle
  */
 public enum LimitType {
     /**

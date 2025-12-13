@@ -1,26 +1,26 @@
 spring:
-#  profiles:
-#    active: prod
+  profiles:
+    active: dev
 #  application:
 #    name: enroll-register
-  cloud:
-    nacos:
+#  cloud:
+#    nacos:
 #      discovery:
 #        server-addr: 127.0.0.1:8848
 #        namespace: enroll-pro
 #        group: DEFAULT_GROUP
 #        username: nacos
 #        password: nacos
-      config:
+#      config:
 #        server-addr: 127.0.0.1:8848
 #        namespace: enroll-pro
 #        group: DEFAULT_GROUP
 #        username: nacos
 #        password: nacos
 #        file-extension: yaml       # 用于共享的配置文件
-        shared-configs:
-          - data-id: common.yaml
-            group: DEFAULT_GROUP
+#        shared-configs:
+#          - data-id: common.yaml
+#            group: DEFAULT_GROUP
 #  datasource:
 #    type: com.alibaba.druid.pool.DruidDataSource
 #    driverClassName: com.mysql.cj.jdbc.Driver
@@ -103,4 +103,5 @@ spring:
 #      application: seata-server
 #server:
 #  port: 8082
-##vb: vb
+#
+#vb: vbootstarter

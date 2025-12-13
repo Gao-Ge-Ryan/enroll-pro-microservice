@@ -4,7 +4,6 @@ package top.gaogle.framework.commons.util;
 import top.gaogle.framework.commons.common.CommonsConst;
 import top.gaogle.framework.commons.function.SnowflakeIdGenerator;
 
-
 public class UniqueUtil {
 
     private UniqueUtil() {

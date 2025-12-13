@@ -3,6 +3,7 @@ package top.gaogle.register.service;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import top.gaogle.framework.commons.service.SuperService;
 import top.gaogle.spi.auth.TestFeign;
@@ -14,6 +15,27 @@ import top.gaogle.framework.commons.util.UniqueUtil;
 
 @Service
 public class TestService extends SuperService {
+
+    @Value("${e}")
+    public String test;
+
+//    @Value("${spring.profiles.active}")
+//    public String profile;
+
+//    @Value("${vb}")
+//    public String vb;
+//
+//    @Value("${we}")
+//    public String we;
+//
+//    @Value("${enroll-register}")
+//    public String ENROLL_REGISTER;
+
+//    @Value("${enroll-register-dev}")
+//    public String ENROLL_REGISTER_DEV;
+
+//    @Value("${enroll-register-dev-yaml}")
+//    public String ENROLL_REGISTER_DEV_YAML;
 
     private final TestMapper testMapper;
     private final TestFeign testFeign;
@@ -83,6 +105,19 @@ public class TestService extends SuperService {
             result.failed().setMessage("register_message", "test发生异常：");
             throw e;
         }
+        return result;
+    }
+
+    public I18nResult<String> testNacos() {
+        I18nResult<String> result = I18nResult.newInstance();
+//        System.out.println(profile);
+//        System.out.println(vb);
+        System.out.println(test);
+//        System.out.println(we);
+//        System.out.println(ENROLL_REGISTER);
+//        System.out.println(ENROLL_REGISTER_DEV);
+//        System.out.println(ENROLL_REGISTER_DEV_YAML);
+//        result.succeed().setData(test);
         return result;
     }
 }

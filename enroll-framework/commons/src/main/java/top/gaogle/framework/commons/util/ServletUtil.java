@@ -1,12 +1,25 @@
 package top.gaogle.framework.commons.util;
 
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import reactor.core.publisher.Mono;
+import top.gaogle.framework.commons.common.CommonsConst;
+import top.gaogle.framework.commons.enums.HttpStatusEnum;
+import top.gaogle.framework.commons.i18n.I18nResult;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Objects;
@@ -40,6 +53,14 @@ public class ServletUtil {
         }
     }
 
+    public static String getHeader(HttpServletRequest request, String name) {
+        String value = request.getHeader(name);
+        if (StringUtils.isEmpty(value)) {
+            return StringUtils.EMPTY;
+        }
+        return urlDecode(value);
+    }
+
     public static Map<String, String> getHeaders(HttpServletRequest request) {
         Map<String, String> map = new LinkedCaseInsensitiveMap<>();
         Enumeration<String> enumeration = request.getHeaderNames();
@@ -51,6 +72,60 @@ public class ServletUtil {
             }
         }
         return map;
+    }
+
+    /**
+     * 设置webflux模型响应
+     *
+     * @param response ServerHttpResponse
+     * @return Mono<Void>
+     */
+    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, HttpStatusEnum status, String msg) {
+        return webFluxResponseWriter(response, status, msg, null);
+    }
+
+    /**
+     * 设置webflux模型响应
+     *
+     * @param response ServerHttpResponse
+     * @param status   http状态码
+     * @param value    响应内容
+     * @return Mono<Void>
+     */
+    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, HttpStatusEnum status, String msg, Object value) {
+        return webFluxResponseWriter(response, MediaType.APPLICATION_JSON_VALUE, status, msg, value);
+    }
+
+    /**
+     * 设置webflux模型响应
+     *
+     * @param response    ServerHttpResponse
+     * @param contentType content-type
+     * @param status      http状态码
+     * @param value       响应内容
+     * @return Mono<Void>
+     */
+    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, String contentType, HttpStatusEnum status, String msg, Object value) {
+        response.setStatusCode(HttpStatus.OK);
+        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
+        I18nResult<Object> result = I18nResult.newInstance();
+        result.failed().setStatus(status).setMessage(msg).setData(value);
+        DataBuffer dataBuffer = response.bufferFactory().wrap(JsonUtil.object2Json(result).getBytes(StandardCharsets.UTF_8));
+        return response.writeWith(Mono.just(dataBuffer));
+    }
+
+    /**
+     * 内容解码
+     *
+     * @param str 内容
+     * @return 解码后的内容
+     */
+    public static String urlDecode(String str) {
+        try {
+            return URLDecoder.decode(str, CommonsConst.UTF8);
+        } catch (UnsupportedEncodingException e) {
+            return StringUtils.EMPTY;
+        }
     }
 
 }

@@ -32,4 +32,9 @@ public class TestController {
         return testService.tcc();
     }
 
+    @GetMapping("/testNacos")
+    public I18nResult<String> testNacos() {
+        return testService.testNacos();
+    }
+
 }

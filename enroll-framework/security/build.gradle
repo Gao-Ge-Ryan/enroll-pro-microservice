@@ -1,19 +1,8 @@
-plugins {
-    id 'java'
-}
-
-group = 'top.gaogle'
-version = '1.0.0-GA'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
+    implementation project(':enroll-framework:commons')
+    implementation project(':enroll-framework:redis')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.security:spring-security-crypto:5.7.11'
+    api 'com.auth0:java-jwt:'+ project.dependencyVersions.auth0
 }

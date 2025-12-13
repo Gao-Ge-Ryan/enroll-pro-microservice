@@ -17,25 +17,16 @@ public class CommonsConst {
     }
 
     public static final String X_FORWARDED_FOR = "X-Forwarded-For";
-    /**
-     * 用户标识
-     */
-    public static final String USER_KEY = "user_key";
 
     /**
-     * 用户ID字段
+     * UTF-8 字符集
      */
-    public static final String DETAILS_USER_ID = "user_id";
+    public static final String UTF8 = "UTF-8";
 
     /**
-     * 用户名字段
+     * GBK 字符集
      */
-    public static final String DETAILS_USERNAME = "username";
-
-    /**
-     * 授权信息字段
-     */
-    public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String GBK = "GBK";
 
     // go ge
     public static final String GO_GE = "Go-Ge";
@@ -73,15 +64,6 @@ public class CommonsConst {
      */
     public static final String HTTPS = "https://";
 
-    /**
-     * UTF-8 字符集
-     */
-    public static final String UTF8 = "UTF-8";
-
-    /**
-     * GBK 字符集
-     */
-    public static final String GBK = "GBK";
 
     /**
      * 注册信息表名

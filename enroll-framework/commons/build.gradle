@@ -1,5 +1,6 @@
 dependencies {
     api 'org.apache.commons:commons-lang3:' + project.dependencyVersions.commons
+    api 'com.alibaba:transmittable-thread-local:'+ project.dependencyVersions.transmittable
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:' + project.dependencyVersions.pagehelper

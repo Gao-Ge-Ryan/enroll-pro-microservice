@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  * 获取IP方法
  *
  * @author gaogle
+ * @since 1.0.0
  */
 public class IpUtil {
     public static final String REGX_0_255 = "(25[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d)";

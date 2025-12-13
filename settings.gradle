@@ -6,7 +6,9 @@ include 'enroll-framework'
 include 'enroll-framework:enums'
 include 'enroll-framework:commons'
 include 'enroll-framework:mybatis'
-
+include 'enroll-framework:security'
+include 'enroll-framework:feign'
+include 'enroll-framework:redis'
 
 include 'enroll-gateway'
 
@@ -20,5 +22,4 @@ include 'enroll-register'
 include 'enroll-bill'
 
 
-include 'enroll-framework:security'
-include 'enroll-framework:feign'
+
