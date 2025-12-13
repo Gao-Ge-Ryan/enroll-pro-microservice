@@ -6,16 +6,15 @@ dependencies {
     implementation(project(':enroll-framework:redis')) {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
     }
-    implementation(project(':enroll-framework:security')) {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
-    }
 
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
-
+    implementation 'org.springframework.boot:spring-boot'
+    implementation 'org.springframework.boot:spring-boot-starter'
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
 }

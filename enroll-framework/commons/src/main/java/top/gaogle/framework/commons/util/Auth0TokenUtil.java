@@ -1,4 +1,4 @@
-package top.gaogle.framework.security.util;
+package top.gaogle.framework.commons.util;
 
 
 import com.auth0.jwt.JWT;

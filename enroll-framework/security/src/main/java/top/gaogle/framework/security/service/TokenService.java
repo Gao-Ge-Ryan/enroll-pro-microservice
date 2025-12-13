@@ -11,7 +11,7 @@ import top.gaogle.framework.commons.common.SecurityConstants;
 import top.gaogle.framework.commons.util.*;
 import top.gaogle.framework.redis.service.RedisService;
 import top.gaogle.framework.security.pojo.LoginUser;
-import top.gaogle.framework.security.util.Auth0TokenUtil;
+import top.gaogle.framework.commons.util.Auth0TokenUtil;
 import top.gaogle.framework.security.util.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,23 +1,9 @@
 spring:
-  application:
-    name: enroll-auth
-  config:
-    import: nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: enroll-pro
-        group: DEFAULT_GROUP
-        username: nacos
-        password: nacos
-      config:
-        server-addr: 127.0.0.1:8848
-        namespace: enroll-pro
-        group: DEFAULT_GROUP
-        username: nacos
-        password: nacos
-        file-extension: yml
+  redis:
+    host: ${REDIS_HOST:39.98.48.234}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PWD:Redis123}
+    database: ${REDIS_DB:0}
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -98,5 +84,3 @@ seata:
       username: nacos
       password: nacos
       application: seata-server
-server:
-  port: 8081

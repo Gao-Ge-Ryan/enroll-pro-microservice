@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+top.gaogle.framework.security.service.TokenService,\
+top.gaogle.framework.security.config.WebMvcConfig

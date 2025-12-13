@@ -1,23 +1,10 @@
 spring:
-  application:
-    name: enroll-gateway
-  config:
-    import: nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+  redis:
+    host: ${REDIS_HOST:39.98.48.234}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PWD:Redis123}
+    database: ${REDIS_DB:0}
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: enroll-pro
-        group: DEFAULT_GROUP
-        username: nacos
-        password: nacos
-      config:
-        server-addr: 127.0.0.1:8848
-        namespace: enroll-pro
-        group: DEFAULT_GROUP
-        username: nacos
-        password: nacos
-        file-extension: yml
     gateway:
       routes:
         - id: auth-route
@@ -26,5 +13,9 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
-server:
-  port: 8080
+
+
+security:
+  ignore:
+    whites:
+      - /auth/auth/login
