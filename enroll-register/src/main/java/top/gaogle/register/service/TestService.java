@@ -56,6 +56,9 @@ public class TestService extends SuperService {
             editParam.setId(UniqueUtil.getUniqueId());
             editParam.setName("test");
             I18nResult<String> result1 = testFeign.insert();
+            if (result1.isFailed()){
+                return result1;
+            }
 
             if (result1.isSuccessful()) {
                 System.out.println("sssssssss");
