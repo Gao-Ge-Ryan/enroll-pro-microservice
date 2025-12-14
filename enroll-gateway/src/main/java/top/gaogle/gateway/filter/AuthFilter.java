@@ -73,13 +73,17 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (StringUtil.isEmpty(userId) || StringUtil.isEmpty(username)) {
             return unauthorizedResponse(exchange, "令牌验证失败");
         }
+        // 内部请求参数清除
+        removeHeader(mutate, SecurityConstants.FROM_SOURCE);
+        removeHeader(mutate, SecurityConstants.USER_KEY);
+        removeHeader(mutate, SecurityConstants.DETAILS_USER_ID);
+        removeHeader(mutate, SecurityConstants.DETAILS_USERNAME);
 
         // 设置用户信息到请求
         addHeader(mutate, SecurityConstants.USER_KEY, userKey);
         addHeader(mutate, SecurityConstants.DETAILS_USER_ID, userId);
         addHeader(mutate, SecurityConstants.DETAILS_USERNAME, username);
-        // 内部请求来源参数清除
-        removeHeader(mutate, SecurityConstants.FROM_SOURCE);
+
         return chain.filter(exchange.mutate().request(mutate.build()).build());
     }
 
