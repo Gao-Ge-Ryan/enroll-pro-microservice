@@ -5,6 +5,8 @@ dependencies {
     implementation project(':enroll-framework:security')
     implementation project(':enroll-framework:redis')
 
+    implementation 'com.auth0:java-jwt:'+ project.dependencyVersions.auth0
+
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'

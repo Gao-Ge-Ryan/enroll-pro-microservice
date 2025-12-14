@@ -13,6 +13,12 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
+        - id: register-route
+          uri: lb://enroll-register
+          predicates:
+            - Path=/register/**
+          filters:
+            - StripPrefix=1
 
 
 security:

@@ -11,11 +11,11 @@ public class SecurityConstants {
     /**
      * 令牌发行人
      */
-    public static final String AUTHENTICATION_ISSUER = "gaogle";
+    public static final String AUTHENTICATION_ISSUER = "enroll-pro";
     /**
      * 令牌密钥
      */
-    public static final String AUTHENTICATION_SECRET = "gaogle";
+    public static final String AUTHENTICATION_SECRET = "ENROLL_PRO_SECRET";
 
     /**
      * 用户ID字段

@@ -3,21 +3,20 @@ package top.gaogle.register.service;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import top.gaogle.framework.commons.i18n.I18nResult;
 import top.gaogle.framework.commons.service.SuperService;
-import top.gaogle.spi.auth.TestFeign;
+import top.gaogle.framework.commons.util.UniqueUtil;
+import top.gaogle.pojo.param.auth.TestEditParam;
 import top.gaogle.register.dao.master.TestMapper;
 import top.gaogle.register.dao.slave.TestSlaveMapper;
-import top.gaogle.framework.commons.i18n.I18nResult;
-import top.gaogle.pojo.param.auth.TestEditParam;
-import top.gaogle.framework.commons.util.UniqueUtil;
+import top.gaogle.spi.auth.TestFeign;
 
 @Service
 public class TestService extends SuperService {
 
-    @Value("${e}")
-    public String test;
+//    @Value("${e}")
+//    public String test;
 
 //    @Value("${spring.profiles.active}")
 //    public String profile;
@@ -112,7 +111,7 @@ public class TestService extends SuperService {
         I18nResult<String> result = I18nResult.newInstance();
 //        System.out.println(profile);
 //        System.out.println(vb);
-        System.out.println(test);
+//        System.out.println(test);
 //        System.out.println(we);
 //        System.out.println(ENROLL_REGISTER);
 //        System.out.println(ENROLL_REGISTER_DEV);

@@ -19,3 +19,5 @@ spring:
             group: DEFAULT_GROUP
           - data-id: shared.yaml
             group: DEFAULT_GROUP
+
+

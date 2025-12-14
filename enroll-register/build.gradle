@@ -3,6 +3,7 @@ dependencies {
     implementation project(':enroll-framework:commons')
     implementation project(':enroll-framework:mybatis')
     implementation project(':enroll-framework:feign')
+    implementation project(':enroll-framework:security')
     implementation project(':enroll-spi:auth')
 
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'

@@ -7,16 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import top.gaogle.framework.commons.common.CacheConstants;
-import top.gaogle.framework.commons.common.SecurityConstants;
-import top.gaogle.framework.commons.util.*;
+import top.gaogle.framework.commons.util.DateUtil;
+import top.gaogle.framework.commons.util.JsonUtil;
+import top.gaogle.framework.commons.util.StringUtil;
 import top.gaogle.framework.redis.service.RedisService;
 import top.gaogle.framework.security.pojo.LoginUser;
-import top.gaogle.framework.commons.util.Auth0TokenUtil;
-import top.gaogle.framework.security.util.SecurityUtil;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,59 +43,16 @@ public class TokenService {
         this.redisService = redisService;
     }
 
-    /**
-     * 创建令牌
-     */
-    public Map<String, Object> createToken(LoginUser loginUser) {
-        String token = UniqueUtil.getUniqueId();
-
-        loginUser.setToken(token);
-        loginUser.setIpaddr(IpUtil.getIpAddr());
-        refreshToken(loginUser);
-
-        // Jwt存储信息
-        Map<String, Object> claimsMap = new HashMap<String, Object>();
-        claimsMap.put(SecurityConstants.USER_KEY, token);
-        claimsMap.put(SecurityConstants.DETAILS_USER_ID, loginUser.getUserid());
-        claimsMap.put(SecurityConstants.DETAILS_USERNAME, loginUser.getUsername());
-
-        // 接口返回信息
-        Map<String, Object> rspMap = new HashMap<String, Object>();
-        rspMap.put("access_token", Auth0TokenUtil.generateToken(claimsMap));
-        rspMap.put("expires_in", TOKEN_EXPIRE_TIME);
-        return rspMap;
-    }
 
     /**
      * 获取用户身份信息
      *
      * @return 用户信息
      */
-    public LoginUser getLoginUser() {
-        return getLoginUser(ServletUtil.getRequest());
-    }
-
-    /**
-     * 获取用户身份信息
-     *
-     * @return 用户信息
-     */
-    public LoginUser getLoginUser(HttpServletRequest request) {
-        // 获取请求携带的令牌
-        String token = SecurityUtil.getToken(request);
-        return getLoginUser(token);
-    }
-
-    /**
-     * 获取用户身份信息
-     *
-     * @return 用户信息
-     */
-    public LoginUser getLoginUser(String token) {
+    public LoginUser getLoginUser(String userKey) {
         LoginUser user = null;
         try {
-            if (StringUtils.isNotEmpty(token)) {
-                String userKey = Auth0TokenUtil.getUserKey(token);
+            if (StringUtils.isNotEmpty(userKey)) {
                 String userJson = redisService.getCacheObject(getTokenKey(userKey));
                 return JsonUtil.json2Object(userJson, LoginUser.class);
             }
@@ -121,9 +74,8 @@ public class TokenService {
     /**
      * 删除用户缓存信息
      */
-    public void delLoginUser(String token) {
-        if (StringUtils.isNotEmpty(token)) {
-            String userKey = Auth0TokenUtil.getUserKey(token);
+    public void delLoginUser(String userKey) {
+        if (StringUtils.isNotEmpty(userKey)) {
             redisService.deleteObject(getTokenKey(userKey));
         }
     }

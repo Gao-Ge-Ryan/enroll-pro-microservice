@@ -18,8 +18,8 @@ import top.gaogle.framework.commons.enums.HttpStatusEnum;
 import top.gaogle.framework.commons.util.ServletUtil;
 import top.gaogle.framework.commons.util.StringUtil;
 import top.gaogle.framework.redis.service.RedisService;
-import top.gaogle.framework.commons.util.Auth0TokenUtil;
 import top.gaogle.gateway.config.IgnoreWhiteProperties;
+import top.gaogle.gateway.util.Auth0TokenUtil;
 
 import java.util.Map;
 
@@ -51,6 +51,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpRequest.Builder mutate = request.mutate();
         String url = request.getURI().getPath();
+        // 🔹 打印原始请求头（用户传入的）
+        log.info("=== 原始请求头（处理前） ===");
+        request.getHeaders().forEach((key, values) -> {
+            log.info("Header: {} = {}", key, values);
+        });
         // 跳过不需要验证的路径
         if (StringUtil.matches(url, ignoreWhite.getWhites())) {
             return chain.filter(exchange);
@@ -74,15 +79,28 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return unauthorizedResponse(exchange, "令牌验证失败");
         }
         // 内部请求参数清除
-        removeHeader(mutate, SecurityConstants.FROM_SOURCE);
-        removeHeader(mutate, SecurityConstants.USER_KEY);
-        removeHeader(mutate, SecurityConstants.DETAILS_USER_ID);
-        removeHeader(mutate, SecurityConstants.DETAILS_USERNAME);
+        mutate.headers(httpHeaders -> {
+            httpHeaders.remove(SecurityConstants.FROM_SOURCE);
+            httpHeaders.remove(SecurityConstants.USER_KEY);
+            httpHeaders.remove(SecurityConstants.DETAILS_USER_ID);
+            httpHeaders.remove(SecurityConstants.DETAILS_USERNAME);
+        });
+
+        ServerHttpRequest newRequest = mutate.build();
+        log.info("=== 修改后的请求头（处理中） ===");
+        newRequest.getHeaders().forEach((key, values) -> {
+            log.info("Header: {} = {}", key, values);
+        });
 
         // 设置用户信息到请求
         addHeader(mutate, SecurityConstants.USER_KEY, userKey);
         addHeader(mutate, SecurityConstants.DETAILS_USER_ID, userId);
         addHeader(mutate, SecurityConstants.DETAILS_USERNAME, username);
+
+        log.info("=== 修改后的请求头（处理后） ===");
+        newRequest.getHeaders().forEach((key, values) -> {
+            log.info("Header: {} = {}", key, values);
+        });
 
         return chain.filter(exchange.mutate().request(mutate.build()).build());
     }
@@ -94,10 +112,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String valueStr = value.toString();
         String valueEncode = StringUtil.urlEncode(valueStr);
         mutate.header(name, valueEncode);
-    }
-
-    private void removeHeader(ServerHttpRequest.Builder mutate, String name) {
-        mutate.headers(httpHeaders -> httpHeaders.remove(name)).build();
     }
 
     private Mono<Void> unauthorizedResponse(ServerWebExchange exchange, String msg) {

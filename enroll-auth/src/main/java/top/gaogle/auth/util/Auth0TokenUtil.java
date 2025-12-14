@@ -1,10 +1,11 @@
-package top.gaogle.framework.commons.util;
+package top.gaogle.auth.util;
 
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.gaogle.framework.commons.common.CommonsConst;
@@ -24,10 +25,20 @@ public class Auth0TokenUtil {
     private Auth0TokenUtil() {
         throw new IllegalStateException(CommonsConst.PROHIBIT_INSTANTIATION);
     }
+    private static final String AUTHENTICATION_SECRET = SecurityConstants.AUTHENTICATION_SECRET + System.getenv(SecurityConstants.AUTHENTICATION_SECRET);
+
+    static {
+        String envValue = System.getenv(SecurityConstants.AUTHENTICATION_SECRET);
+        if (StringUtils.isEmpty(envValue)) {
+            log.error("Environment variable {} not found or empty! AUTHENTICATION_SECRET =={}", SecurityConstants.AUTHENTICATION_SECRET, AUTHENTICATION_SECRET);
+            throw new IllegalStateException("Startup aborted: Missing environment variable " + SecurityConstants.AUTHENTICATION_SECRET);
+        }
+
+    }
 
 
     public static String generateToken(Map<String, Object> claims) {
-        return JWT.create().withIssuer(SecurityConstants.AUTHENTICATION_ISSUER).withPayload(claims).sign(Algorithm.HMAC512(SecurityConstants.AUTHENTICATION_SECRET));
+        return JWT.create().withIssuer(SecurityConstants.AUTHENTICATION_ISSUER).withPayload(claims).sign(Algorithm.HMAC512(AUTHENTICATION_SECRET));
     }
 
     public static Map<String, Claim> getClaims(String token) {
@@ -89,7 +100,7 @@ public class Auth0TokenUtil {
 
 
     public static DecodedJWT getDecodedJWT(String token) {
-        return JWT.require(Algorithm.HMAC512(SecurityConstants.AUTHENTICATION_SECRET)).withIssuer(SecurityConstants.AUTHENTICATION_ISSUER).build().verify(token);
+        return JWT.require(Algorithm.HMAC512(AUTHENTICATION_SECRET)).withIssuer(SecurityConstants.AUTHENTICATION_ISSUER).build().verify(token);
     }
 
     /**

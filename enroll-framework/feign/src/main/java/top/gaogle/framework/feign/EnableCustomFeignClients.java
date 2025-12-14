@@ -2,6 +2,7 @@ package top.gaogle.framework.feign;
 
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
+import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
@@ -15,6 +16,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @EnableFeignClients
+@Import(FeignAutoConfiguration.class)
 public @interface EnableCustomFeignClients {
     /**
      * Alias for the {@link #basePackages()} attribute. Allows for more concise annotation

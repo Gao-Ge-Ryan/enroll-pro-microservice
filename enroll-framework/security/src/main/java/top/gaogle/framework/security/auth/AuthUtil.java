@@ -9,6 +9,7 @@ import top.gaogle.framework.security.pojo.LoginUser;
  * Token 权限验证工具类
  *
  * @author gaogle
+ * @since 1.0.0
  */
 public class AuthUtil {
     /**
@@ -42,11 +43,11 @@ public class AuthUtil {
     /**
      * 获取当前登录用户信息
      *
-     * @param token 指定token
+     * @param userKey 指定token
      * @return 用户信息
      */
-    public static LoginUser getLoginUser(String token) {
-        return authLogic.getLoginUser(token);
+    public static LoginUser getLoginUser(String userKey) {
+        return authLogic.getLoginUser(userKey);
     }
 
     /**

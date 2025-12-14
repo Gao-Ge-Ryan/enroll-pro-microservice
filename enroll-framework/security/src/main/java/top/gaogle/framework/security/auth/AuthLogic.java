@@ -3,7 +3,7 @@ package top.gaogle.framework.security.auth;
 
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
-import top.gaogle.framework.commons.context.SecurityContextHolder;
+import top.gaogle.framework.security.context.SecurityContextHolder;
 import top.gaogle.framework.commons.exception.auth.NotLoginException;
 import top.gaogle.framework.commons.exception.auth.NotPermissionException;
 import top.gaogle.framework.commons.exception.auth.NotRoleException;
@@ -43,18 +43,18 @@ public class AuthLogic {
      * 会话注销
      */
     public void logout() {
-        String token = SecurityUtil.getToken();
-        if (token == null) {
+        String userKey = SecurityUtil.getUserKey();
+        if (userKey == null) {
             return;
         }
-        logoutByToken(token);
+        logoutByToken(userKey);
     }
 
     /**
      * 会话注销，根据指定Token
      */
-    public void logoutByToken(String token) {
-        tokenService.delLoginUser(token);
+    public void logoutByToken(String userKey) {
+        tokenService.delLoginUser(userKey);
     }
 
     /**
@@ -70,10 +70,6 @@ public class AuthLogic {
      * @return 用户缓存信息
      */
     public LoginUser getLoginUser() {
-        String token = SecurityUtil.getToken();
-        if (token == null) {
-            throw new NotLoginException("未提供token");
-        }
         LoginUser loginUser = SecurityUtil.getLoginUser();
         if (loginUser == null) {
             throw new NotLoginException("无效的token");
@@ -84,11 +80,11 @@ public class AuthLogic {
     /**
      * 获取当前用户缓存信息, 如果未登录，则抛出异常
      *
-     * @param token 前端传递的认证信息
+     * @param userKey 前端传递的认证信息
      * @return 用户缓存信息
      */
-    public LoginUser getLoginUser(String token) {
-        return tokenService.getLoginUser(token);
+    public LoginUser getLoginUser(String userKey) {
+        return tokenService.getLoginUser(userKey);
     }
 
     /**

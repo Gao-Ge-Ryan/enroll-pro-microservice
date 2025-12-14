@@ -5,12 +5,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import top.gaogle.framework.commons.common.SecurityConstants;
-import top.gaogle.framework.commons.context.SecurityContextHolder;
 import top.gaogle.framework.commons.util.ServletUtil;
 import top.gaogle.framework.commons.util.StringUtil;
 import top.gaogle.framework.security.auth.AuthUtil;
+import top.gaogle.framework.security.context.SecurityContextHolder;
 import top.gaogle.framework.security.pojo.LoginUser;
-import top.gaogle.framework.security.util.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,14 +26,17 @@ public class HeaderInterceptor implements AsyncHandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+        System.out.println("==================我执行了");
+        String userKey = ServletUtil.getHeader(request, SecurityConstants.USER_KEY);
+        String userId = ServletUtil.getHeader(request, SecurityConstants.DETAILS_USER_ID);
+        String username = ServletUtil.getHeader(request, SecurityConstants.DETAILS_USERNAME);
+        SecurityContextHolder.setUserKey(userKey);
+        SecurityContextHolder.setUserId(userId);
+        SecurityContextHolder.setUserName(username);
 
-        SecurityContextHolder.setUserId(ServletUtil.getHeader(request, SecurityConstants.DETAILS_USER_ID));
-        SecurityContextHolder.setUserName(ServletUtil.getHeader(request, SecurityConstants.DETAILS_USERNAME));
-        SecurityContextHolder.setUserKey(ServletUtil.getHeader(request, SecurityConstants.USER_KEY));
 
-        String token = SecurityUtil.getToken();
-        if (StringUtils.isNotEmpty(token)) {
-            LoginUser loginUser = AuthUtil.getLoginUser(token);
+        if (StringUtils.isNotEmpty(userKey)) {
+            LoginUser loginUser = AuthUtil.getLoginUser(userKey);
             if (StringUtil.isNotNull(loginUser)) {
                 AuthUtil.verifyLoginUserExpire(loginUser);
                 SecurityContextHolder.set(SecurityConstants.LOGIN_USER, loginUser);

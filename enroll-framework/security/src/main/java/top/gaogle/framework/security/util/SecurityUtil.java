@@ -3,7 +3,7 @@ package top.gaogle.framework.security.util;
 
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import top.gaogle.framework.commons.common.SecurityConstants;
-import top.gaogle.framework.commons.context.SecurityContextHolder;
+import top.gaogle.framework.security.context.SecurityContextHolder;
 import top.gaogle.framework.commons.util.ServletUtil;
 import top.gaogle.framework.security.pojo.LoginUser;
 
@@ -14,6 +14,7 @@ import java.util.Objects;
  * 权限获取工具类
  *
  * @author gaogle
+ * @since 1.0.0
  */
 public class SecurityUtil {
     /**
