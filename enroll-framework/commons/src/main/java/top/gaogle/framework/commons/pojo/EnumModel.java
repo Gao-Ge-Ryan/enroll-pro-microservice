@@ -1,23 +1,24 @@
-package top.gaogle.framework.enums;
+package top.gaogle.framework.commons.pojo;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class EnumModel {
+public class EnumModel<T extends Serializable> {
 
-    private IndexedEnum<String> enumName;
-    private String value;
+    private IndexedEnum<T> enumName;
+    private T value;
     private String title;
 
     public EnumModel() {
     }
 
-    public EnumModel(IndexedEnum<String> enumName) {
+    public EnumModel(IndexedEnum<T> enumName) {
         this.enumName = enumName;
     }
 
-    public EnumModel(IndexedEnum<String> enumName, String value, String title) {
+    public EnumModel(IndexedEnum<T> enumName, T value, String title) {
         this.enumName = enumName;
         this.value = value;
         this.title = title;
@@ -29,7 +30,7 @@ public class EnumModel {
     }
 
 
-    public String value() {
+    public T value() {
         return value;
     }
 
@@ -38,19 +39,19 @@ public class EnumModel {
         return title;
     }
 
-    public IndexedEnum<String> getEnumName() {
+    public IndexedEnum<T> getEnumName() {
         return enumName;
     }
 
-    public void setEnumName(IndexedEnum<String> enumName) {
+    public void setEnumName(IndexedEnum<T> enumName) {
         this.enumName = enumName;
     }
 
-    public String getValue() {
+    public T getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(T value) {
         this.value = value;
     }
 

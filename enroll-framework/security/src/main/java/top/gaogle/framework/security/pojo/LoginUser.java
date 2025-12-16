@@ -1,6 +1,7 @@
 package top.gaogle.framework.security.pojo;
 
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -44,12 +45,12 @@ public class LoginUser implements Serializable {
     /**
      * 权限列表
      */
-    private Set<String> permissions;
+    private Set<String> permissions = new LinkedHashSet<>();
 
     /**
      * 角色列表
      */
-    private Set<String> roles;
+    private Set<String> roles = new LinkedHashSet<>();
 
 
     public String getToken() {

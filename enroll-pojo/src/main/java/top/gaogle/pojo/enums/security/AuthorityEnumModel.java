@@ -1,24 +1,23 @@
-package top.gaogle.pojo.model.auth;
+package top.gaogle.pojo.enums.security;
 
-import top.gaogle.framework.enums.EnumModel;
-import top.gaogle.framework.enums.IndexedEnum;
-import top.gaogle.pojo.enums.auth.AuthorityEnum;
+import top.gaogle.framework.commons.pojo.EnumModel;
+import top.gaogle.framework.commons.pojo.IndexedEnum;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class AuthorityEnumModel extends EnumModel {
+public class AuthorityEnumModel extends EnumModel<Long> {
 
     private Long shift;
     private Boolean authorized = false;
     private Long authorityNum = 0L;
-    private List<EnumModel> childEnums;
+    private List<AuthorityEnumModel> childEnums;
 
     public AuthorityEnumModel() {
     }
 
-    public AuthorityEnumModel(IndexedEnum<String> enumName) {
+    public AuthorityEnumModel(IndexedEnum<Long> enumName) {
         super(enumName);
         AuthorityEnum authorityEnum = (AuthorityEnum) enumName;
         super.setValue(authorityEnum.value());
@@ -36,7 +35,7 @@ public class AuthorityEnumModel extends EnumModel {
                 .collect(Collectors.toList());
     }
 
-    public AuthorityEnumModel(IndexedEnum<String> enumName, Long authorityNum) {
+    public AuthorityEnumModel(IndexedEnum<Long> enumName, Long authorityNum) {
         super(enumName);
         AuthorityEnum authorityEnum = (AuthorityEnum) enumName;
         super.setValue(authorityEnum.value());
@@ -58,11 +57,11 @@ public class AuthorityEnumModel extends EnumModel {
     }
 
 
-    public List<EnumModel> getChildEnums() {
+    public List<AuthorityEnumModel> getChildEnums() {
         return childEnums;
     }
 
-    public void setChildEnums(List<EnumModel> childEnums) {
+    public void setChildEnums(List<AuthorityEnumModel> childEnums) {
         this.childEnums = childEnums;
     }
 

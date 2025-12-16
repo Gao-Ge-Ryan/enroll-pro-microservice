@@ -1,7 +1,7 @@
 package top.gaogle.pojo.enums.register;
 
 
-import top.gaogle.framework.enums.IndexedEnum;
+import top.gaogle.framework.commons.pojo.IndexedEnum;
 
 public enum DynamicOptionsTypeEnum implements IndexedEnum<Integer> {
 

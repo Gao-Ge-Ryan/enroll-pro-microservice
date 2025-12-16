@@ -2,7 +2,7 @@ package top.gaogle.pojo.param.register;
 
 
 import top.gaogle.pojo.entity.register.Role;
-import top.gaogle.pojo.enums.auth.AuthorityEnum;
+import top.gaogle.pojo.enums.security.AuthorityEnum;
 
 import java.util.List;
 

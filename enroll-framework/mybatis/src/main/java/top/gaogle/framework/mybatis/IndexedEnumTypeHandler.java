@@ -3,7 +3,7 @@ package top.gaogle.framework.mybatis;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
-import top.gaogle.framework.enums.IndexedEnum;
+import top.gaogle.framework.commons.pojo.IndexedEnum;
 
 
 import java.io.Serializable;

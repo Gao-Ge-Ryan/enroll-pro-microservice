@@ -10,18 +10,18 @@ spring:
         - id: auth-route
           uri: lb://enroll-auth
           predicates:
-            - Path=/auth/**
+            - Path=/api/auth/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=2
         - id: register-route
           uri: lb://enroll-register
           predicates:
-            - Path=/register/**
+            - Path=/api/register/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=2
 
 
 security:
   ignore:
     whites:
-      - /auth/auth/login
+      - /api/auth/auth/login

@@ -26,14 +26,12 @@ public class HeaderInterceptor implements AsyncHandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        System.out.println("==================我执行了");
         String userKey = ServletUtil.getHeader(request, SecurityConstants.USER_KEY);
         String userId = ServletUtil.getHeader(request, SecurityConstants.DETAILS_USER_ID);
         String username = ServletUtil.getHeader(request, SecurityConstants.DETAILS_USERNAME);
         SecurityContextHolder.setUserKey(userKey);
         SecurityContextHolder.setUserId(userId);
         SecurityContextHolder.setUserName(username);
-
 
         if (StringUtils.isNotEmpty(userKey)) {
             LoginUser loginUser = AuthUtil.getLoginUser(userKey);

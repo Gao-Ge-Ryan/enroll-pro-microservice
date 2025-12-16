@@ -11,9 +11,12 @@ import top.gaogle.framework.commons.util.UniqueUtil;
 import top.gaogle.framework.security.pojo.LoginUser;
 import top.gaogle.framework.security.service.TokenService;
 import top.gaogle.pojo.entity.auth.AuthenticationPacket;
+import top.gaogle.pojo.enums.security.AuthorityEnumConst;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class AuthService extends SuperService {
@@ -34,6 +37,9 @@ public class AuthService extends SuperService {
             loginUser.setUsername("user% name");
             String token = String.join("_", loginUser.getUsername(), UniqueUtil.getUniqueId(), CaptchaGeneratorUtil.generateCaptcha(8));
             loginUser.setToken(token);
+            Set<String> permissions = new LinkedHashSet<>();
+            permissions.add(AuthorityEnumConst.USER_PUT_ADMIN);
+            loginUser.setPermissions(permissions);
             Map<String, Object> claims = new HashMap<>();
             claims.put(SecurityConstants.USER_KEY, token);
             claims.put(SecurityConstants.DETAILS_USER_ID, loginUser.getUserid());

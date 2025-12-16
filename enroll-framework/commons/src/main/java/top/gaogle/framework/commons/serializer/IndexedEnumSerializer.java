@@ -1,10 +1,10 @@
-package top.gaogle.framework.enums;
+package top.gaogle.framework.commons.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import top.gaogle.framework.commons.common.KeyValue;
-
+import top.gaogle.framework.commons.pojo.IndexedEnum;
 
 import java.io.IOException;
 

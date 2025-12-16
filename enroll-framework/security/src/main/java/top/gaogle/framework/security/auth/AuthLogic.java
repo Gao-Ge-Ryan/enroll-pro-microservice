@@ -1,18 +1,16 @@
 package top.gaogle.framework.security.auth;
 
 
-import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
-import top.gaogle.framework.security.context.SecurityContextHolder;
 import top.gaogle.framework.commons.exception.auth.NotLoginException;
 import top.gaogle.framework.commons.exception.auth.NotPermissionException;
 import top.gaogle.framework.commons.exception.auth.NotRoleException;
 import top.gaogle.framework.commons.util.SpringUtil;
 import top.gaogle.framework.commons.util.StringUtil;
 import top.gaogle.framework.security.annotation.Logical;
-import top.gaogle.framework.security.annotation.RequiresLogin;
 import top.gaogle.framework.security.annotation.RequiresPermissions;
 import top.gaogle.framework.security.annotation.RequiresRoles;
+import top.gaogle.framework.security.context.SecurityContextHolder;
 import top.gaogle.framework.security.pojo.LoginUser;
 import top.gaogle.framework.security.service.TokenService;
 import top.gaogle.framework.security.util.SecurityUtil;
@@ -96,39 +94,39 @@ public class AuthLogic {
         tokenService.verifyToken(loginUser);
     }
 
-    /**
-     * 验证用户是否具备某权限
-     *
-     * @param permission 权限字符串
-     * @return 用户是否具备某权限
-     */
-    public boolean hasPermi(String permission) {
-        return hasPermi(getPermiList(), permission);
-    }
-
-    /**
-     * 验证用户是否具备某权限, 如果验证未通过，则抛出异常: NotPermissionException
-     *
-     * @param permission 权限字符串
-     * @return 用户是否具备某权限
-     */
-    public void checkPermi(String permission) {
-        if (!hasPermi(getPermiList(), permission)) {
-            throw new NotPermissionException(permission);
-        }
-    }
+//    /**
+//     * 验证用户是否具备某权限
+//     *
+//     * @param permission 权限字符串
+//     * @return 用户是否具备某权限
+//     */
+//    public boolean hasPermissions(String permission) {
+//        return hasPermissions(getPermissionsList(), permission);
+//    }
+//
+//    /**
+//     * 验证用户是否具备某权限, 如果验证未通过，则抛出异常: NotPermissionException
+//     *
+//     * @param permission 权限字符串
+//     * @return 用户是否具备某权限
+//     */
+//    public void checkPermissions(String permission) {
+//        if (!hasPermissions(getPermissionsList(), permission)) {
+//            throw new NotPermissionException(permission);
+//        }
+//    }
 
     /**
      * 根据注解(@RequiresPermissions)鉴权, 如果验证未通过，则抛出异常: NotPermissionException
      *
      * @param requiresPermissions 注解对象
      */
-    public void checkPermi(RequiresPermissions requiresPermissions) {
+    public void checkPermissions(RequiresPermissions requiresPermissions) {
         SecurityContextHolder.setPermission(StringUtil.join(requiresPermissions.value(), ","));
         if (requiresPermissions.logical() == Logical.AND) {
-            checkPermiAnd(requiresPermissions.value());
+            checkPermissionsAnd(requiresPermissions.value());
         } else {
-            checkPermiOr(requiresPermissions.value());
+            checkPermissionsOr(requiresPermissions.value());
         }
     }
 
@@ -137,10 +135,10 @@ public class AuthLogic {
      *
      * @param permissions 权限列表
      */
-    public void checkPermiAnd(String... permissions) {
-        Set<String> permissionList = getPermiList();
+    public void checkPermissionsAnd(String... permissions) {
+        Set<String> permissionList = getPermissionsList();
         for (String permission : permissions) {
-            if (!hasPermi(permissionList, permission)) {
+            if (!hasPermissions(permissionList, permission)) {
                 throw new NotPermissionException(permission);
             }
         }
@@ -151,10 +149,10 @@ public class AuthLogic {
      *
      * @param permissions 权限码数组
      */
-    public void checkPermiOr(String... permissions) {
-        Set<String> permissionList = getPermiList();
+    public void checkPermissionsOr(String... permissions) {
+        Set<String> permissionList = getPermissionsList();
         for (String permission : permissions) {
-            if (hasPermi(permissionList, permission)) {
+            if (hasPermissions(permissionList, permission)) {
                 return;
             }
         }
@@ -163,26 +161,26 @@ public class AuthLogic {
         }
     }
 
-    /**
-     * 判断用户是否拥有某个角色
-     *
-     * @param role 角色标识
-     * @return 用户是否具备某角色
-     */
-    public boolean hasRole(String role) {
-        return hasRole(getRoleList(), role);
-    }
+//    /**
+//     * 判断用户是否拥有某个角色
+//     *
+//     * @param role 角色标识
+//     * @return 用户是否具备某角色
+//     */
+//    public boolean hasRole(String role) {
+//        return hasRole(getRoleList(), role);
+//    }
 
-    /**
-     * 判断用户是否拥有某个角色, 如果验证未通过，则抛出异常: NotRoleException
-     *
-     * @param role 角色标识
-     */
-    public void checkRole(String role) {
-        if (!hasRole(role)) {
-            throw new NotRoleException(role);
-        }
-    }
+//    /**
+//     * 判断用户是否拥有某个角色, 如果验证未通过，则抛出异常: NotRoleException
+//     *
+//     * @param role 角色标识
+//     */
+//    public void checkRole(String role) {
+//        if (!hasRole(role)) {
+//            throw new NotRoleException(role);
+//        }
+//    }
 
     /**
      * 根据注解(@RequiresRoles)鉴权
@@ -228,42 +226,42 @@ public class AuthLogic {
         }
     }
 
-    /**
-     * 根据注解(@RequiresLogin)鉴权
-     *
-     * @param at 注解对象
-     */
-    public void checkByAnnotation(RequiresLogin at) {
-        this.checkLogin();
-    }
+//    /**
+//     * 根据注解(@RequiresLogin)鉴权
+//     *
+//     * @param at 注解对象
+//     */
+//    public void checkByAnnotation(RequiresLogin at) {
+//        this.checkLogin();
+//    }
 
-    /**
-     * 根据注解(@RequiresRoles)鉴权
-     *
-     * @param at 注解对象
-     */
-    public void checkByAnnotation(RequiresRoles at) {
-        String[] roleArray = at.value();
-        if (at.logical() == Logical.AND) {
-            this.checkRoleAnd(roleArray);
-        } else {
-            this.checkRoleOr(roleArray);
-        }
-    }
-
-    /**
-     * 根据注解(@RequiresPermissions)鉴权
-     *
-     * @param at 注解对象
-     */
-    public void checkByAnnotation(RequiresPermissions at) {
-        String[] permissionArray = at.value();
-        if (at.logical() == Logical.AND) {
-            this.checkPermiAnd(permissionArray);
-        } else {
-            this.checkPermiOr(permissionArray);
-        }
-    }
+//    /**
+//     * 根据注解(@RequiresRoles)鉴权
+//     *
+//     * @param at 注解对象
+//     */
+//    public void checkByAnnotation(RequiresRoles at) {
+//        String[] roleArray = at.value();
+//        if (at.logical() == Logical.AND) {
+//            this.checkRoleAnd(roleArray);
+//        } else {
+//            this.checkRoleOr(roleArray);
+//        }
+//    }
+//
+//    /**
+//     * 根据注解(@RequiresPermissions)鉴权
+//     *
+//     * @param at 注解对象
+//     */
+//    public void checkByAnnotation(RequiresPermissions at) {
+//        String[] permissionArray = at.value();
+//        if (at.logical() == Logical.AND) {
+//            this.checkPermissionsAnd(permissionArray);
+//        } else {
+//            this.checkPermiOr(permissionArray);
+//        }
+//    }
 
     /**
      * 获取当前账号的角色列表
@@ -284,7 +282,7 @@ public class AuthLogic {
      *
      * @return 权限列表
      */
-    public Set<String> getPermiList() {
+    public Set<String> getPermissionsList() {
         try {
             LoginUser loginUser = getLoginUser();
             return loginUser.getPermissions();
@@ -300,9 +298,9 @@ public class AuthLogic {
      * @param permission  权限字符串
      * @return 用户是否具备某权限
      */
-    public boolean hasPermi(Collection<String> authorities, String permission) {
+    public boolean hasPermissions(Collection<String> authorities, String permission) {
         return authorities.stream().filter(StringUtils::hasText)
-                .anyMatch(x -> ALL_PERMISSION.equals(x) || PatternMatchUtils.simpleMatch(x, permission));
+                .anyMatch(x -> x.equals(permission));
     }
 
     /**
@@ -314,6 +312,6 @@ public class AuthLogic {
      */
     public boolean hasRole(Collection<String> roles, String role) {
         return roles.stream().filter(StringUtils::hasText)
-                .anyMatch(x -> SUPER_ADMIN.equals(x) || PatternMatchUtils.simpleMatch(x, role));
+                .anyMatch(x -> x.equals(role));
     }
 }

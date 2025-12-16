@@ -1,6 +1,7 @@
 dependencies {
     implementation project(':enroll-framework:commons')
     implementation project(':enroll-framework:redis')
+    implementation project(':enroll-framework:enums')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.security:spring-security-crypto:' + project.dependencyVersions.crypto

@@ -1,7 +1,7 @@
-package top.gaogle.framework.enums;
+package top.gaogle.framework.commons.pojo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
+import top.gaogle.framework.commons.serializer.IndexedEnumSerializer;
 
 import java.io.Serializable;
 

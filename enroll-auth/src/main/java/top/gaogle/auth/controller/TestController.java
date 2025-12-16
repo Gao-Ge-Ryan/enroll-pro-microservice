@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.gaogle.framework.commons.i18n.I18nResult;
 import top.gaogle.auth.service.TestService;
-import top.gaogle.framework.security.annotation.InnerAuth;
+import top.gaogle.framework.commons.i18n.I18nResult;
+import top.gaogle.framework.security.annotation.RequiresLogin;
 
 /**
  * @author gaogle
@@ -22,7 +22,7 @@ public class TestController {
     public TestController(TestService testService) {
         this.testService = testService;
     }
-    @InnerAuth
+    @RequiresLogin
     @GetMapping
     public I18nResult<String> insert() {
         return testService.test();
