@@ -1,11 +1,11 @@
-package top.gaogle.framework.security.annotation;
+package top.gaogle.framework.security.enums;
 
 /**
  * 权限注解的验证模式
  *
  * @author gaogle
  */
-public enum Logical {
+public enum LogicalEnum {
     /**
      * 必须具有所有的元素
      */

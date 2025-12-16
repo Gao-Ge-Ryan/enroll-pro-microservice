@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.gaogle.framework.commons.i18n.I18nResult;
-import top.gaogle.framework.security.annotation.Logical;
+import top.gaogle.framework.security.enums.LogicalEnum;
 import top.gaogle.framework.security.annotation.RequiresPermissions;
 import top.gaogle.pojo.enums.security.AuthorityEnumConst;
 import top.gaogle.register.service.TestService;
@@ -25,7 +25,7 @@ public class TestController {
         this.testService = testService;
     }
 
-    @RequiresPermissions(value = {AuthorityEnumConst.USER_VIEW_ADMIN, AuthorityEnumConst.USER_PUT_ADMIN}, logical = Logical.OR)
+    @RequiresPermissions(value = {AuthorityEnumConst.USER_VIEW_ADMIN, AuthorityEnumConst.USER_PUT_ADMIN}, logical = LogicalEnum.OR)
     @GetMapping
     public I18nResult<String> insert() {
         return testService.test();

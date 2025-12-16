@@ -7,7 +7,7 @@ import top.gaogle.framework.commons.exception.auth.NotPermissionException;
 import top.gaogle.framework.commons.exception.auth.NotRoleException;
 import top.gaogle.framework.commons.util.SpringUtil;
 import top.gaogle.framework.commons.util.StringUtil;
-import top.gaogle.framework.security.annotation.Logical;
+import top.gaogle.framework.security.enums.LogicalEnum;
 import top.gaogle.framework.security.annotation.RequiresPermissions;
 import top.gaogle.framework.security.annotation.RequiresRoles;
 import top.gaogle.framework.security.context.SecurityContextHolder;
@@ -123,7 +123,7 @@ public class AuthLogic {
      */
     public void checkPermissions(RequiresPermissions requiresPermissions) {
         SecurityContextHolder.setPermission(StringUtil.join(requiresPermissions.value(), ","));
-        if (requiresPermissions.logical() == Logical.AND) {
+        if (requiresPermissions.logical() == LogicalEnum.AND) {
             checkPermissionsAnd(requiresPermissions.value());
         } else {
             checkPermissionsOr(requiresPermissions.value());
@@ -188,7 +188,7 @@ public class AuthLogic {
      * @param requiresRoles 注解对象
      */
     public void checkRole(RequiresRoles requiresRoles) {
-        if (requiresRoles.logical() == Logical.AND) {
+        if (requiresRoles.logical() == LogicalEnum.AND) {
             checkRoleAnd(requiresRoles.value());
         } else {
             checkRoleOr(requiresRoles.value());

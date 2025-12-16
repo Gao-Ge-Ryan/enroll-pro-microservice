@@ -1,5 +1,7 @@
 package top.gaogle.framework.security.annotation;
 
+import top.gaogle.framework.security.enums.LogicalEnum;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -21,5 +23,5 @@ public @interface RequiresRoles {
     /**
      * 验证逻辑：AND | OR，默认AND
      */
-    Logical logical() default Logical.AND;
+    LogicalEnum logical() default LogicalEnum.AND;
 }
