@@ -5,7 +5,7 @@ import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.data.redis.connection.stream.RecordId;
 import org.springframework.data.redis.stream.StreamListener;
 import org.springframework.stereotype.Component;
-import top.gaogle.framework.redis.annotation.RedisStream;
+import top.gaogle.framework.redis.annotation.RedisStreamMQ;
 import top.gaogle.framework.redis.service.RedisService;
 
 import javax.annotation.Resource;
@@ -19,12 +19,12 @@ import java.util.Objects;
  * @since 1.0.0
  */
 @Component
-public class BasicAckStreamConsumeListener implements StreamListener<String, MapRecord<String, String, String>> {
+public class BasicAckStreamMQConsumeListener implements StreamListener<String, MapRecord<String, String, String>> {
 
     @Resource
     private RedisService redisStreamUtil;
     @Resource
-    private Map<String, RedisConsumer> redisConsumer;
+    private Map<String, RedisStreamMQConsumer> redisConsumer;
 
     /**
      * 监听器
@@ -38,26 +38,25 @@ public class BasicAckStreamConsumeListener implements StreamListener<String, Map
         RecordId recordId = message.getId();
         //消息内容
         Map<String, String> msg = message.getValue();
-        for (Map.Entry<String, RedisConsumer> redisConsumerEntry : redisConsumer.entrySet()) {
+        for (Map.Entry<String, RedisStreamMQConsumer> redisConsumerEntry : redisConsumer.entrySet()) {
             // 获取目标类
-            RedisConsumer redisConsumer = redisConsumerEntry.getValue();
-            Class<?> targetClass = AopUtils.getTargetClass(redisConsumer);
-            RedisStream redisStream = targetClass.getAnnotation(RedisStream.class);
-            if (Objects.isNull(redisStream)) {
+            RedisStreamMQConsumer redisStreamMQConsumer = redisConsumerEntry.getValue();
+            Class<?> targetClass = AopUtils.getTargetClass(redisStreamMQConsumer);
+            RedisStreamMQ redisStreamMQ = targetClass.getAnnotation(RedisStreamMQ.class);
+            if (Objects.isNull(redisStreamMQ)) {
                 continue;
             }
-            if (!Objects.equals(streamName, redisStream.streamName())) {
+            if (!Objects.equals(streamName, redisStreamMQ.streamName())) {
                 continue;
             }
             try {
-                redisConsumer.dealMsg(message);
+                redisStreamMQConsumer.dealMsg(message);
                 //逻辑处理完成后，ack消息，删除消息，group为消费组名称
-                redisStreamUtil.ack(streamName, redisStream.groupName(), recordId.getValue());
+                redisStreamUtil.ack(streamName, redisStreamMQ.groupName(), recordId.getValue());
             } catch (Exception e) {
+                redisStreamMQConsumer.fallBack(message);
                 throw new RuntimeException(e);
             }
-            // 不能直接删除 需要业务层自己维护 等到所有消费组都消费完才删除 一般可以不考虑删除
-//            redisStreamUtil.del(streamName, recordId.getValue());
         }
         System.out.println("【streamName】= " + streamName + ",【recordId】= " + recordId + ",【msg】=" + msg);
     }

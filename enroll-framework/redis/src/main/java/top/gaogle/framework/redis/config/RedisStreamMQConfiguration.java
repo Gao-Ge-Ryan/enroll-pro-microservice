@@ -33,17 +33,17 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 1.0.0
  */
 @Configuration
-@ConditionalOnProperty(value = "redis.stream.enable", havingValue = "true")
-public class RedisStreamConfiguration {
-    private static final Logger log = LoggerFactory.getLogger(RedisStreamConfiguration.class);
+@ConditionalOnProperty(value = "redis.stream.mq.enable", havingValue = "true")
+public class RedisStreamMQConfiguration {
+    private static final Logger log = LoggerFactory.getLogger(RedisStreamMQConfiguration.class);
     @Resource
     private RedisConnectionFactory redisConnectionFactory;
     @Resource
-    private BasicAckStreamConsumeListener basicAckStreamConsumeListener;
+    private BasicAckStreamMQConsumeListener basicAckStreamMQConsumeListener;
     @Resource
     private RedisService redisStreamUtil;
     @Resource
-    private RedisMqProperties redisMqProperties;
+    private RedisStreamMQProperties redisStreamMQProperties;
 
     private static final int BATCHSIZE = 5;     // 一次最多获取多少条消息
     private static final long POLL_TIMEOUT = 3;  // Stream 中没有消息时，阻塞多长时间，需要比 `spring.redis.timeout` 的时间小
@@ -94,7 +94,7 @@ public class RedisStreamConfiguration {
     @Bean
     public List<Subscription> createSubscription(StreamMessageListenerContainer<String, MapRecord<String, String, String>> listenerContainer) {
         // 创建不同的订阅者
-        List<RedisMq> configs = Objects.requireNonNull(redisMqProperties.getConfigs(), "config error: config is null");
+        List<RedisMq> configs = Objects.requireNonNull(redisStreamMQProperties.getConfigs(), "config error: config is null");
         List<Subscription> subscriptions = new ArrayList<>();
         for (RedisMq config : configs) {
             String streamName = config.getStreamName();
@@ -109,7 +109,7 @@ public class RedisStreamConfiguration {
                     .autoAcknowledge(false)
                     // 重要！
                     .cancelOnError(t -> false).build();
-            Subscription subscription = listenerContainer.register(build, basicAckStreamConsumeListener);
+            Subscription subscription = listenerContainer.register(build, basicAckStreamMQConsumeListener);
             subscriptions.add(subscription);
         }
         return subscriptions;

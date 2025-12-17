@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@ConfigurationProperties(prefix = "redis.stream")
-public class RedisMqProperties {
+@ConfigurationProperties(prefix = "redis.stream.mq")
+public class RedisStreamMQProperties {
     private List<RedisMq> configs = new ArrayList<>();
 
     public List<RedisMq> getConfigs() {

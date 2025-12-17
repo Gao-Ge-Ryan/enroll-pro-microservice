@@ -1,12 +1,12 @@
 package top.gaogle.register.service.task.test;
 
 import org.springframework.data.redis.connection.stream.MapRecord;
-import top.gaogle.framework.redis.annotation.RedisStream;
-import top.gaogle.framework.redis.config.RedisConsumer;
+import top.gaogle.framework.redis.annotation.RedisStreamMQ;
+import top.gaogle.framework.redis.config.RedisStreamMQConsumer;
 
-@RedisStream(streamName = "goodsStream",groupName = "goodsGroup")
+@RedisStreamMQ(streamName = "goodsStream",groupName = "goodsGroup")
 
-public class GoodsConsumer implements RedisConsumer {
+public class GoodsStreamMQConsumer implements RedisStreamMQConsumer {
 
     @Override
     public void dealMsg(MapRecord<String, String, String> message) {

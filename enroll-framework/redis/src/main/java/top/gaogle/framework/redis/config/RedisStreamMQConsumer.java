@@ -2,7 +2,7 @@ package top.gaogle.framework.redis.config;
 
 import org.springframework.data.redis.connection.stream.MapRecord;
 
-public interface RedisConsumer {
+public interface RedisStreamMQConsumer {
 
     /**
      * @param message 消息对象

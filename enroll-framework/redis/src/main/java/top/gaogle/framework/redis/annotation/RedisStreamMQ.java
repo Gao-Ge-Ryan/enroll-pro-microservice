@@ -2,9 +2,9 @@ package top.gaogle.framework.redis.annotation;
 
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
-import top.gaogle.framework.redis.config.BasicAckStreamConsumeListener;
-import top.gaogle.framework.redis.config.RedisMqProperties;
-import top.gaogle.framework.redis.config.RedisStreamConfiguration;
+import top.gaogle.framework.redis.config.BasicAckStreamMQConsumeListener;
+import top.gaogle.framework.redis.config.RedisStreamMQProperties;
+import top.gaogle.framework.redis.config.RedisStreamMQConfiguration;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -20,8 +20,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @Component
-@Import({RedisStreamConfiguration.class, BasicAckStreamConsumeListener.class, RedisMqProperties. class})
-public @interface RedisStream {
+@Import({RedisStreamMQConfiguration.class, BasicAckStreamMQConsumeListener.class, RedisStreamMQProperties. class})
+public @interface RedisStreamMQ {
 
     /**
      * 消息主题
