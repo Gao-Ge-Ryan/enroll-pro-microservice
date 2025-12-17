@@ -10,7 +10,7 @@ import top.gaogle.framework.commons.common.CacheConstants;
 import top.gaogle.framework.commons.util.DateUtil;
 import top.gaogle.framework.commons.util.JsonUtil;
 import top.gaogle.framework.commons.util.StringUtil;
-import top.gaogle.framework.redis.service.RedisService;
+import top.gaogle.framework.redis.service.RedisStringService;
 import top.gaogle.framework.security.pojo.LoginUser;
 
 import java.util.concurrent.TimeUnit;
@@ -26,7 +26,7 @@ public class TokenService {
     private static final Logger log = LoggerFactory.getLogger(TokenService.class);
 
 
-    private final RedisService redisService;
+    private final RedisStringService redisStringService;
 
     protected static final long MILLIS_SECOND = 1000;
 
@@ -39,8 +39,8 @@ public class TokenService {
     private final static Long TOKEN_REFRESH_THRESHOLD_MINUTES = CacheConstants.REFRESH_TIME * MILLIS_MINUTE;
 
     @Autowired
-    public TokenService(RedisService redisService) {
-        this.redisService = redisService;
+    public TokenService(RedisStringService redisStringService) {
+        this.redisStringService = redisStringService;
     }
 
 
@@ -53,7 +53,7 @@ public class TokenService {
         LoginUser user = null;
         try {
             if (StringUtils.isNotEmpty(userKey)) {
-                String userJson = redisService.getCacheObject(getTokenKey(userKey));
+                String userJson = redisStringService.getCacheObject(getTokenKey(userKey));
                 return JsonUtil.json2Object(userJson, LoginUser.class);
             }
         } catch (Exception e) {
@@ -76,7 +76,7 @@ public class TokenService {
      */
     public void delLoginUser(String userKey) {
         if (StringUtils.isNotEmpty(userKey)) {
-            redisService.deleteObject(getTokenKey(userKey));
+            redisStringService.deleteObject(getTokenKey(userKey));
         }
     }
 
@@ -101,7 +101,7 @@ public class TokenService {
         loginUser.setExpireTime(loginUser.getLoginTime() + TOKEN_EXPIRE_TIME * MILLIS_MINUTE);
         // 根据uuid将loginUser缓存
         String userKey = getTokenKey(loginUser.getToken());
-        redisService.setCacheObject(userKey, JsonUtil.object2Json(loginUser), TOKEN_EXPIRE_TIME, TimeUnit.MINUTES);
+        redisStringService.setCacheObject(userKey, JsonUtil.object2Json(loginUser), TOKEN_EXPIRE_TIME, TimeUnit.MINUTES);
     }
 
     private String getTokenKey(String token) {

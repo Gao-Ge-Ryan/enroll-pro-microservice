@@ -20,7 +20,7 @@ public class SecurityUtil {
     /**
      * 获取用户ID
      */
-    public static Long getUserId() {
+    public static String getUserId() {
         return SecurityContextHolder.getUserId();
     }
 

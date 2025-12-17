@@ -8,6 +8,7 @@ import top.gaogle.framework.commons.common.CommonsConst;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 public class StringUtil extends StringUtils {
 
@@ -76,6 +77,16 @@ public class StringUtil extends StringUtils {
         } catch (UnsupportedEncodingException e) {
             return StringUtil.EMPTY;
         }
+    }
+
+    /**
+     * * 判断一个Map是否为空
+     *
+     * @param map 要判断的Map
+     * @return true：为空 false：非空
+     */
+    public static boolean isEmpty(Map<?, ?> map) {
+        return isNull(map) || map.isEmpty();
     }
 
 

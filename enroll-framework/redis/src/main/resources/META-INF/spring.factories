@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-top.gaogle.framework.redis.service.RedisService
+top.gaogle.framework.redis.service.RedisStringService,\
+top.gaogle.framework.redis.service.RedisService,\
+top.gaogle.framework.redis.config.RedisConfig    

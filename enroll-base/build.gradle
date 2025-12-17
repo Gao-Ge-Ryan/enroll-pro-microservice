@@ -4,7 +4,6 @@ dependencies {
     implementation project(':enroll-framework:mybatis')
     implementation project(':enroll-framework:feign')
     implementation project(':enroll-framework:security')
-    implementation project(':enroll-framework:redis')
     implementation project(':enroll-spi:auth')
 
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
@@ -17,5 +16,4 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
 }

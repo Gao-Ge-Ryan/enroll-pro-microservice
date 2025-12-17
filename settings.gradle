@@ -1,6 +1,5 @@
 rootProject.name = 'enroll-pro-microservice'
-include 'enroll-pojo'
-include 'enroll-auth'
+
 
 include 'enroll-framework'
 include 'enroll-framework:enums'
@@ -9,17 +8,17 @@ include 'enroll-framework:mybatis'
 include 'enroll-framework:security'
 include 'enroll-framework:feign'
 include 'enroll-framework:redis'
-
-include 'enroll-gateway'
+include 'enroll-framework:log'
 
 
 include 'enroll-spi'
 include 'enroll-spi:auth'
 
 
+include 'enroll-gateway'
+include 'enroll-pojo'
+include 'enroll-auth'
 include 'enroll-file'
 include 'enroll-register'
 include 'enroll-bill'
-
-
-
+include 'enroll-base'

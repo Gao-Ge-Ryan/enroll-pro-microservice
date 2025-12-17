@@ -46,8 +46,8 @@ public class SecurityContextHolder {
         THREAD_LOCAL.set(threadLocalMap);
     }
 
-    public static Long getUserId() {
-        return ConvertUtil.toLong(get(SecurityConstants.DETAILS_USER_ID), 0L);
+    public static String getUserId() {
+        return ConvertUtil.toStr(get(SecurityConstants.DETAILS_USER_ID), "");
     }
 
     public static void setUserId(String account) {

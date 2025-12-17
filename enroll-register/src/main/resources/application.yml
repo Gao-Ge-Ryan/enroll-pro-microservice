@@ -84,3 +84,8 @@ seata:
       username: nacos
       password: nacos
       application: seata-server
+
+
+redis:
+  stream:
+    enable:  true

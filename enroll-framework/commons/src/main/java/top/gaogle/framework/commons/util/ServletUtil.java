@@ -16,13 +16,12 @@ import top.gaogle.framework.commons.common.CommonsConst;
 import top.gaogle.framework.commons.enums.HttpStatusEnum;
 import top.gaogle.framework.commons.i18n.I18nResult;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * 客户端工具类
@@ -126,6 +125,31 @@ public class ServletUtil {
         } catch (UnsupportedEncodingException e) {
             return StringUtils.EMPTY;
         }
+    }
+
+    /**
+     * 获得所有请求参数
+     *
+     * @param request 请求对象{@link ServletRequest}
+     * @return Map
+     */
+    public static Map<String, String> getParamMap(ServletRequest request) {
+        Map<String, String> params = new HashMap<>();
+        for (Map.Entry<String, String[]> entry : getParams(request).entrySet()) {
+            params.put(entry.getKey(), StringUtil.join(entry.getValue(), ","));
+        }
+        return params;
+    }
+
+    /**
+     * 获得所有请求参数
+     *
+     * @param request 请求对象{@link ServletRequest}
+     * @return Map
+     */
+    public static Map<String, String[]> getParams(ServletRequest request) {
+        final Map<String, String[]> map = request.getParameterMap();
+        return Collections.unmodifiableMap(map);
     }
 
 }

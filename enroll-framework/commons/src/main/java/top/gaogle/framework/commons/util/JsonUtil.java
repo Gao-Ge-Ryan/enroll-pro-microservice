@@ -11,6 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.gaogle.framework.commons.common.CommonsConst;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Jackson常用方式封装
  *
@@ -118,6 +122,31 @@ public class JsonUtil {
 
         }
         return jsonDate;
+    }
+
+    /**
+     * 将对象转为 JSON 字符串，并排除指定的字段（支持任意对象，无需注解）
+     */
+    public static String object2Json(Object fromValue, String[] excludeParamNames) {
+        if (fromValue == null) {
+            return "";
+        }
+        try {
+            // 先转成 JsonNode（树模型）
+            JsonNode jsonNode = objectMapper.valueToTree(fromValue);
+            // 如果是对象类型，才进行字段排除
+            if (jsonNode.isObject()) {
+                ObjectNode objectNode = (ObjectNode) jsonNode;
+                Set<String> excludes = excludeParamNames != null
+                        ? new HashSet<>(Arrays.asList(excludeParamNames))
+                        : new HashSet<>();
+                // 删除敏感字段
+                excludes.forEach(objectNode::remove);
+            }
+            return objectMapper.writeValueAsString(jsonNode);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public static <T> T json2Object(String json, Class<T> clazz) {

@@ -17,7 +17,7 @@ import top.gaogle.framework.commons.common.SecurityConstants;
 import top.gaogle.framework.commons.enums.HttpStatusEnum;
 import top.gaogle.framework.commons.util.ServletUtil;
 import top.gaogle.framework.commons.util.StringUtil;
-import top.gaogle.framework.redis.service.RedisService;
+import top.gaogle.framework.redis.service.RedisStringService;
 import top.gaogle.gateway.config.IgnoreWhiteProperties;
 import top.gaogle.gateway.util.Auth0TokenUtil;
 
@@ -37,12 +37,12 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private final IgnoreWhiteProperties ignoreWhite;
 
 
-    private final RedisService redisService;
+    private final RedisStringService redisStringService;
 
     @Autowired
-    public AuthFilter(IgnoreWhiteProperties ignoreWhite, RedisService redisService) {
+    public AuthFilter(IgnoreWhiteProperties ignoreWhite, RedisStringService redisStringService) {
         this.ignoreWhite = ignoreWhite;
-        this.redisService = redisService;
+        this.redisStringService = redisStringService;
     }
 
 
@@ -69,7 +69,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return unauthorizedResponse(exchange, "令牌已过期或验证不正确！");
         }
         String userKey = Auth0TokenUtil.getUserKey(claims);
-        boolean isLogin = redisService.hasKey(getTokenKey(userKey));
+        boolean isLogin = redisStringService.hasKey(getTokenKey(userKey));
         if (!isLogin) {
             return unauthorizedResponse(exchange, "登录状态已过期");
         }
