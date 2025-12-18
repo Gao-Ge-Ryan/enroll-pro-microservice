@@ -56,7 +56,7 @@ public class LogAspect {
      * 异常最大长度限制
      */
     private static final int EXCEPTION_MAX_LENGTH = 5000;
-    public static final String OPERATE_LOG_KEY = "OPERATE_LOG_KEY";
+    public static final String OPERATE_LOG_KEY = "OPERATE_LOG";
 
     @Autowired
     public LogAspect(RedisService redisService) {
