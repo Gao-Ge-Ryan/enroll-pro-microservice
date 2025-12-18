@@ -50,29 +50,31 @@ public class TestController {
 
     @PostMapping("/addMsg")
 //    @ApiOperation(value = "添加消息")
-    public void addMsg(@RequestBody ProducerParam param) {
-
-        Map<String,Object> map = new HashMap<>();
+    public I18nResult<String> addMsg(@RequestBody ProducerParam param) {
+        I18nResult<String> result = I18nResult.newInstance();
+        Map<String, Object> map = new HashMap<>();
         String myStream = redisStreamUtil.addStreamMsg(param.getStreamName(), param.getParam());
+        return result.succeed().setData(myStream);
 
     }
 
     @GetMapping(value = "/getPendingList")
 //    @ApiOperation(value = "获取pending list集合(消费出现异常 没有ack时)")
-    public void getPendingList(@RequestParam(value = "streamName") String streamName,
-                               @RequestParam(value = "groupName") String groupName) {
+    public I18nResult<List<MapRecord<String, Object, Object>>> getPendingList(@RequestParam(value = "streamName") String streamName,
+                                                                              @RequestParam(value = "groupName") String groupName) {
+        I18nResult<List<MapRecord<String, Object, Object>>> result = I18nResult.newInstance();
         List<MapRecord<String, Object, Object>> pendingList = redisStreamUtil.getPendingList(streamName, groupName);
-
+        return result.succeed().setData(pendingList);
     }
 
     @GetMapping(value = "/getPendingByMsgId")
 //    @ApiOperation(value = "获取pending list中某个元素(消费出现异常 没有ack时)")
-    public void getPendingByMsgId(@RequestParam(value = "streamName") String streamName,
-                                  @RequestParam(value = "msgId",required = false) String msgId) {
-        List<MapRecord<String, Object, Object>> pendingList = redisStreamUtil.getPendingByMsgId(streamName,msgId);
-
+    public I18nResult<List<MapRecord<String, Object, Object>>> getPendingByMsgId(@RequestParam(value = "streamName") String streamName,
+                                                                                 @RequestParam(value = "msgId", required = false) String msgId) {
+        I18nResult<List<MapRecord<String, Object, Object>>> result = I18nResult.newInstance();
+        List<MapRecord<String, Object, Object>> pendingList = redisStreamUtil.getPendingByMsgId(streamName, msgId);
+        return result.succeed().setData(pendingList);
     }
-
 
 
 }

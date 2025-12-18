@@ -61,7 +61,7 @@ public class RedisStreamMQConfiguration {
                 new LinkedBlockingDeque<>(), // 限制队列大小
                 r -> {
                     Thread thread = new Thread(r);
-                    thread.setName("async-stream-consumer-" + index.getAndIncrement());
+                    thread.setName("async-redis-stream-consumer-" + index.getAndIncrement());
                     thread.setDaemon(true);
                     return thread;
                 }
@@ -81,7 +81,7 @@ public class RedisStreamMQConfiguration {
                         .batchSize(BATCHSIZE)
                         .executor(executor)      // 运行 Stream 的 poll task
                         .pollTimeout(Duration.ofSeconds(POLL_TIMEOUT))
-                        .errorHandler(throwable -> log.error("出现异常就来这里了{}", String.valueOf(throwable))) // 获取消息的过程或获取到消息给具体的消息者处理的过程中，发生了异常的处理
+                        .errorHandler(throwable -> log.error("出现异常就来这里了", throwable)) // 获取消息的过程或获取到消息给具体的消息者处理的过程中，发生了异常的处理
                         .build();
         StreamMessageListenerContainer<String, MapRecord<String, String, String>> streamMessageListenerContainer =
                 StreamMessageListenerContainer.create(redisConnectionFactory, options);

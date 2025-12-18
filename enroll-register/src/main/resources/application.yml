@@ -88,4 +88,14 @@ seata:
 
 redis:
   stream:
-    enable:  true
+    mq:
+      enable: true
+      configs:
+        - stream-name: goodsStream123
+          group-name: goodsGroup
+          consumer-name: goodsConsumer
+        - stream-name: orderStream
+          group-name: orderGroup
+          consumer-name: orderConsumer
+
+
