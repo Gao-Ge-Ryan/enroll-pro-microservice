@@ -6,22 +6,17 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.stream.Consumer;
-import org.springframework.data.redis.connection.stream.MapRecord;
-import org.springframework.data.redis.connection.stream.ReadOffset;
-import org.springframework.data.redis.connection.stream.StreamOffset;
+import org.springframework.data.redis.connection.stream.*;
 import org.springframework.data.redis.stream.StreamMessageListenerContainer;
 import org.springframework.data.redis.stream.Subscription;
+import org.springframework.util.CollectionUtils;
 import top.gaogle.framework.redis.pojo.RedisMq;
 import top.gaogle.framework.redis.service.RedisService;
 
 import javax.annotation.Resource;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.*;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -50,15 +45,14 @@ public class RedisStreamMQConfiguration {
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     public StreamMessageListenerContainer<String, MapRecord<String, String, String>> streamMessageListenerContainer() {
-        //创建线程池
+        // 创建线程池
         AtomicInteger index = new AtomicInteger(1);
-        int processors = Runtime.getRuntime().availableProcessors();
         ThreadPoolExecutor executor = new ThreadPoolExecutor(
-                processors,
-                processors,
                 0,
+                Integer.MAX_VALUE,
+                60L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(), // 限制队列大小
+                new SynchronousQueue<>(), // 无缓冲队列：提交任务必须立刻有线程处理
                 r -> {
                     Thread thread = new Thread(r);
                     thread.setName("async-redis-stream-consumer-" + index.getAndIncrement());
@@ -81,7 +75,7 @@ public class RedisStreamMQConfiguration {
                         .batchSize(BATCHSIZE)
                         .executor(executor)      // 运行 Stream 的 poll task
                         .pollTimeout(Duration.ofSeconds(POLL_TIMEOUT))
-                        .errorHandler(throwable -> log.error("出现异常就来这里了", throwable)) // 获取消息的过程或获取到消息给具体的消息者处理的过程中，发生了异常的处理
+                        .errorHandler(throwable -> log.error("redis-stream-consumer-出现异常", throwable)) // 获取消息的过程或获取到消息给具体的消息者处理的过程中，发生了异常的处理
                         .build();
         StreamMessageListenerContainer<String, MapRecord<String, String, String>> streamMessageListenerContainer =
                 StreamMessageListenerContainer.create(redisConnectionFactory, options);
@@ -100,7 +94,7 @@ public class RedisStreamMQConfiguration {
             String streamName = config.getStreamName();
             String groupName = config.getGroupName();
             String consumerName = config.getConsumerName();
-            initStreamAndGroup(streamName, groupName);
+            initStreamAndGroup(streamName, groupName, consumerName);
             //配置消费组
             StreamMessageListenerContainer.ConsumerStreamReadRequest<String> build = StreamMessageListenerContainer
                     .StreamReadRequest
@@ -116,7 +110,7 @@ public class RedisStreamMQConfiguration {
     }
 
     //初始化stream和消费者组
-    private void initStreamAndGroup(String streamKey, String groupName) {
+    private void initStreamAndGroup(String streamKey, String groupName, String consumerName) {
         try {
             // 1. 如果 Stream 不存在，直接创建 Stream 和 Group
             if (!redisStreamUtil.hasKey(streamKey)) {
@@ -129,6 +123,18 @@ public class RedisStreamMQConfiguration {
             if (!isGroupExists(streamKey, groupName)) {
                 redisStreamUtil.createGroup(streamKey, groupName);
                 log.info("Group {} initialized for existing stream {}", groupName, streamKey);
+            }
+            List<MapRecord<String, String, Object>> pendingList = redisStreamUtil.getPendingList(streamKey, groupName);
+            if (!CollectionUtils.isEmpty(pendingList)) {
+                for (MapRecord<String, String, Object> pending : pendingList) {
+                    RecordId id = pending.getId();
+                    Map<String, Object> value = pending.getValue();
+                    // todo gaoge 得改成原子操作，或者怎么让PEL重新消费
+//                    redisStreamUtil.xClaim(streamKey, groupName,consumerName, id);
+//                    redisStreamUtil.resetPendingListToStream(streamKey, id.getValue(), value);
+                    redisStreamUtil.deleteStreamMsg(streamKey, id.getValue());
+                    redisStreamUtil.addStreamMsg(streamKey, value);
+                }
             }
         } catch (Exception e) {
             log.error("初始化Stream/Group失败", e);

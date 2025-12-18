@@ -60,11 +60,14 @@ public class TestController {
 
     @GetMapping(value = "/getPendingList")
 //    @ApiOperation(value = "获取pending list集合(消费出现异常 没有ack时)")
-    public I18nResult<List<MapRecord<String, Object, Object>>> getPendingList(@RequestParam(value = "streamName") String streamName,
-                                                                              @RequestParam(value = "groupName") String groupName) {
-        I18nResult<List<MapRecord<String, Object, Object>>> result = I18nResult.newInstance();
-        List<MapRecord<String, Object, Object>> pendingList = redisStreamUtil.getPendingList(streamName, groupName);
-        return result.succeed().setData(pendingList);
+    public I18nResult<Map<String, Object>> getPendingList(@RequestParam(value = "streamName") String streamName,
+                                                          @RequestParam(value = "groupName") String groupName) {
+        I18nResult<Map<String, Object>> result = I18nResult.newInstance();
+        List<MapRecord<String, String, Object>> pendingList = redisStreamUtil.getPendingList(streamName, groupName);
+        Map<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("pendingList", pendingList);
+        stringObjectHashMap.put("size", pendingList.size());
+        return result.succeed().setData(stringObjectHashMap);
     }
 
     @GetMapping(value = "/getPendingByMsgId")
@@ -76,5 +79,15 @@ public class TestController {
         return result.succeed().setData(pendingList);
     }
 
+    @DeleteMapping(value = "/deletePendingListByMsgId")
+//    @ApiOperation(value = "获取pending list集合(消费出现异常 没有ack时)")
+    public I18nResult<Boolean> deletePendingListByMsgId(@RequestParam(value = "streamName") String streamName,
+                                                        @RequestParam(value = "msgId", required = false) String msgId) {
+        I18nResult<Boolean> result = I18nResult.newInstance();
+
+        redisStreamUtil.deleteStreamMsg(streamName, msgId);
+
+        return result.succeed().setData(true);
+    }
 
 }

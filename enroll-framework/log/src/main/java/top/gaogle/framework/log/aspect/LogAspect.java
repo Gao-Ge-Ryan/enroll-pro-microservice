@@ -3,27 +3,28 @@ package top.gaogle.framework.log.aspect;
 
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import top.gaogle.framework.commons.util.*;
 import top.gaogle.framework.log.annotation.Log;
 import top.gaogle.framework.log.enums.BusinessStatusEnum;
 import top.gaogle.framework.log.pojo.OperateLog;
+import top.gaogle.framework.redis.service.RedisService;
 import top.gaogle.framework.security.util.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -37,6 +38,8 @@ import java.util.Objects;
 @Component
 public class LogAspect {
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
+
+    private final RedisService redisService;
 
 
     /**
@@ -53,6 +56,12 @@ public class LogAspect {
      * 异常最大长度限制
      */
     private static final int EXCEPTION_MAX_LENGTH = 5000;
+    public static final String OPERATE_LOG_KEY = "OPERATE_LOG_KEY";
+
+    @Autowired
+    public LogAspect(RedisService redisService) {
+        this.redisService = redisService;
+    }
 
 
     /**
@@ -114,8 +123,11 @@ public class LogAspect {
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
             // 设置消耗时间
             operLog.setCostTime(DateUtil.currentTimeMillis() - TIME_THREADLOCAL.get());
+            operLog.setCreateAt(DateUtil.currentTimeMillis());
             // 保存(redis生产-消费模式)
-            asyncLogService.saveSysLog(operLog);
+            Map<String, Object> map = new HashMap<>();
+            map.put(OPERATE_LOG_KEY, JsonUtil.object2Json(operLog));
+            redisService.addStreamMsg(StringUtil.joinWithColon(OPERATE_LOG_KEY), map);
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("LogAspect异常信息operLog:{},joinPoint:{}", JsonUtil.object2Json(operLog), JsonUtil.object2Json(joinPoint), exp);

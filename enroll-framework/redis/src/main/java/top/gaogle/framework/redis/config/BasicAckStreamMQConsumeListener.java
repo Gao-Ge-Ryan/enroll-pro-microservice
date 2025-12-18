@@ -31,7 +31,6 @@ public class BasicAckStreamMQConsumeListener implements StreamListener<String, M
      */
     @Override
     public void onMessage(MapRecord<String, String, String> message) {
-        System.out.println("监听到消息messageId:{}" + message.getId());
         //stream的key值
         String streamName = message.getStream();
         //消息ID
@@ -58,6 +57,5 @@ public class BasicAckStreamMQConsumeListener implements StreamListener<String, M
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("【streamName】= " + streamName + ",【recordId】= " + recordId + ",【msg】=" + msg);
     }
 }

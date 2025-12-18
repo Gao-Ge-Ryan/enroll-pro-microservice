@@ -94,7 +94,7 @@ redis:
         - stream-name: goodsStream123
           group-name: goodsGroup
           consumer-name: goodsConsumer
-        - stream-name: orderStream
+        - stream-name: orderStream2323
           group-name: orderGroup
           consumer-name: orderConsumer
 

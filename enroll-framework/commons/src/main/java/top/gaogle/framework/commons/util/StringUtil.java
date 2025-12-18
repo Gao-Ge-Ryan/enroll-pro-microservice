@@ -89,5 +89,29 @@ public class StringUtil extends StringUtils {
         return isNull(map) || map.isEmpty();
     }
 
+    /**
+     * 使用冒号 ":" 拼接多个字符串
+     *
+     * @param parts 要拼接的字符串数组（可变参数）
+     * @return 拼接后的字符串，如 "str1:str2:str3"
+     */
+    public static String joinWithColon(String... parts) {
+        if (parts == null || parts.length == 0) {
+            return "";
+        }
+        if (parts.length == 1) {
+            return parts[0] == null ? "" : parts[0];
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < parts.length; i++) {
+            if (i > 0) {
+                sb.append(":");
+            }
+            sb.append(parts[i] == null ? "" : parts[i]);
+        }
+        return sb.toString();
+    }
+
 
 }

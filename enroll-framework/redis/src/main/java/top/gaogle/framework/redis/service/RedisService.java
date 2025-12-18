@@ -3,15 +3,14 @@ package top.gaogle.framework.redis.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Range;
 import org.springframework.data.redis.connection.RedisZSetCommands;
-import org.springframework.data.redis.connection.stream.MapRecord;
-import org.springframework.data.redis.connection.stream.PendingMessagesSummary;
-import org.springframework.data.redis.connection.stream.StreamInfo;
-import org.springframework.data.redis.connection.stream.StreamOffset;
+import org.springframework.data.redis.connection.stream.*;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StreamOperations;
 import org.springframework.stereotype.Component;
 import top.gaogle.framework.commons.util.StringUtil;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -117,6 +116,21 @@ public class RedisService {
     }
 
     /**
+     * 消费者组确认消息
+     *
+     * @param stream stream名称
+     *               //     * @param group  组名称
+     */
+    public void xClaim(String stream, String groupName, String consumerName, RecordId id) {
+        List<ByteRecord> retVal = redisTemplate.execute((RedisCallback<List<ByteRecord>>) connection -> {
+            // XCLAIM 指令的实现方法
+            return connection.streamCommands().xClaim("orderStream2323".getBytes(), "orderGroup", "orderConsumer", Duration.ofSeconds(10), id);
+        });
+
+//        return redisTemplate.opsForStream().acknowledge(stream, group, recordIds);
+    }
+
+    /**
      * 获取 Pending 中的摘要
      *
      * @param stream stream名称
@@ -134,8 +148,8 @@ public class RedisService {
      * @param stream stream名称
      * @param group  组名称
      */
-    public List<MapRecord<String, Object, Object>> getPendingList(String stream, String group) {
-        StreamOperations<String, Object, Object> streamOps = redisTemplate.opsForStream();
+    public List<MapRecord<String, String, Object>> getPendingList(String stream, String group) {
+        StreamOperations<String, String, Object> streamOps = redisTemplate.opsForStream();
 
         // 获取 pending list 中未确认的消息概要
         PendingMessagesSummary pendingSummary = streamOps.pending(stream, group);
@@ -157,8 +171,9 @@ public class RedisService {
         String maxMessageId = pendingSummary.maxMessageId();
 
         // 获取 pending list 中具体的消息
-        return streamOps.range(stream, Range.closed(minMessageId, maxMessageId), RedisZSetCommands.Limit.limit().count(10));
+        return streamOps.range(stream, Range.closed(minMessageId, maxMessageId));
     }
+
 
     /**
      * 获取pending list中某个元素(消费出现异常 没有ack时)
