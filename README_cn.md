@@ -32,7 +32,10 @@
 ### 前端
 - Vue:3
 - Nginx:1.21.5
-### 部署: Docker、Docker-compose、Kubernetes
+### 部署
+- Docker
+- Docker-compose
+- Kubernetes
 
 （注：前后端分离单体应用，请移步 [enroll-pro](https://github.com/Gao-Ge-Ryan/enroll-pro)）
 

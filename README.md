@@ -15,13 +15,28 @@ English version | [中文版](README_cn.md)
 
 A customizable registration system suitable for exam registration systems, event registration systems, or any other form of registration scenarios. This system can be used for production or enterprise-level projects. The project and code have undergone rigorous testing and support private deployments.
 
-### System Architecture
+## System Architecture
 
-- Backend: Java 8, SpringBoot 2.5.15, SpringCloud, SpringCloudAlibaba, Mybatis, Gradle, Minio.
-- Frontend: Vue 3.
-- Database: Mysql 8.0.21, Redis (latest).
-- Requires zero changes to existing programs.
-- Deployment: Docker, Docker-compose
+### Backend 
+- Java:8
+- SpringBoot:2.6.13
+- SpringCloud:2021.0.5
+- SpringCloudAlibaba:2021.0.5.0
+- Mybatis:2.3.1
+- Seata:1.6.1
+- Nacos:2.2.0
+- Sentinel:1.8.6
+- Mysql:8.0.21
+- Redis:6.2.6
+- Minio:RELEASE.2022-01-04T07-41-07Z
+- Gradle
+### Frontend
+- Vue:3
+- Nginx:1.21.5
+### Deployment
+- Docker
+- Docker-compose
+- Kubernetes
 
 Note: For the frontend-backend separated monolithic application, please visit [enroll-pro](https://github.com/Gao-Ge-Ryan/enroll-pro)
 ## User Manual
