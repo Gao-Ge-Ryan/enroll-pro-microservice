@@ -7,6 +7,9 @@ import java.lang.annotation.Target;
 
 /**
  * 多数据源事务
+ *
+ * @author gaogle
+ * @since 1.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.PARAMETER})

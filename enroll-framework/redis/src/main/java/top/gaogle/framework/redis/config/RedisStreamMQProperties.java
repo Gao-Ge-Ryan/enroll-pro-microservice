@@ -7,6 +7,12 @@ import top.gaogle.framework.redis.pojo.RedisMq;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * redis stream mq 配置
+ *
+ * @author gaogle
+ * @since 1.0.0
+ */
 @Component
 @ConfigurationProperties(prefix = "redis.stream.mq")
 public class RedisStreamMQProperties {

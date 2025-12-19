@@ -9,6 +9,9 @@ import java.lang.annotation.*;
 
 /**
  * 启用自定义 MyBatis 多数据源配置
+ *
+ * @author gaogle
+ * @since 1.0.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

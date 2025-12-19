@@ -3,8 +3,8 @@ package top.gaogle.framework.redis.annotation;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import top.gaogle.framework.redis.config.BasicAckStreamMQConsumeListener;
-import top.gaogle.framework.redis.config.RedisStreamMQProperties;
 import top.gaogle.framework.redis.config.RedisStreamMQConfiguration;
+import top.gaogle.framework.redis.config.RedisStreamMQProperties;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

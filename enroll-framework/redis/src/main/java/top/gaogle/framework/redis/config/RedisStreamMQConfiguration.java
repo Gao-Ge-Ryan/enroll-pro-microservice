@@ -40,10 +40,9 @@ public class RedisStreamMQConfiguration {
     @Resource
     private BasicAckStreamMQConsumeListener basicAckStreamMQConsumeListener;
     @Resource
-    private StringRedisService redisStreamUtil;
+    private StringRedisService stringRedisService;
     @Resource
     private RedisStreamMQProperties redisStreamMQProperties;
-
 
     private static final int BATCHSIZE = 5;     // 一次最多获取多少条消息
     private static final long POLL_TIMEOUT = 3;  // Stream 中没有消息时，阻塞多长时间，需要比 `spring.redis.timeout` 的时间小
@@ -51,7 +50,6 @@ public class RedisStreamMQConfiguration {
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     public StreamMessageListenerContainer<String, MapRecord<String, String, String>> streamMessageListenerContainer() {
-        // 创建线程池
         AtomicInteger index = new AtomicInteger(1);
         ThreadPoolExecutor executor = new ThreadPoolExecutor(
                 0,
@@ -66,7 +64,6 @@ public class RedisStreamMQConfiguration {
                     return thread;
                 }
         );
-
         /*StreamMessage监听器容器配置
           streamMessageListenerContainer中的 .batchSize(1) 设置需要着重说一下。
           意思是在消费者在监听到数据的时候，一次从redis中取出的多少条数据，假设我设置1，
@@ -128,18 +125,18 @@ public class RedisStreamMQConfiguration {
     private void initStreamAndGroup(String streamKey, String groupName, String consumerName) {
         try {
             // 1. 如果 Stream 不存在，直接创建 Stream 和 Group
-            if (!redisStreamUtil.hasKey(streamKey)) {
-                redisStreamUtil.createGroup(streamKey, groupName);
+            if (!stringRedisService.hasKey(streamKey)) {
+                stringRedisService.createGroup(streamKey, groupName);
                 log.info("Stream {} and group {} initialized", streamKey, groupName);
                 return;
             }
 
             // 2. Stream 存在但 Group 可能不存在，精确检查
             if (!isGroupExists(streamKey, groupName)) {
-                redisStreamUtil.createGroup(streamKey, groupName);
+                stringRedisService.createGroup(streamKey, groupName);
                 log.info("Group {} initialized for existing stream {}", groupName, streamKey);
             }
-            List<MapRecord<String, String, String>> pendingList = redisStreamUtil.getPendingList(streamKey, groupName);
+            List<MapRecord<String, String, String>> pendingList = stringRedisService.getPendingList(streamKey, groupName);
             if (!CollectionUtils.isEmpty(pendingList)) {
                 for (MapRecord<String, String, String> pending : pendingList) {
                     RecordId id = pending.getId();
@@ -147,8 +144,8 @@ public class RedisStreamMQConfiguration {
                     // todo gaoge 得改成原子操作，或者怎么让PEL重新消费
 //                    redisStreamUtil.xClaim(streamKey, groupName,consumerName, id);
 //                    redisStreamUtil.resetPendingListToStream(streamKey, id.getValue(), value);
-                    redisStreamUtil.deleteStreamMsg(streamKey, id.getValue());
-                    redisStreamUtil.addStreamMsg(streamKey, value);
+                    stringRedisService.deleteStreamMsg(streamKey, id.getValue());
+                    stringRedisService.addStreamMsg(streamKey, value);
                 }
             }
         } catch (Exception e) {
@@ -160,7 +157,7 @@ public class RedisStreamMQConfiguration {
     private boolean isGroupExists(String streamKey, String groupName) {
         try {
             // 使用 RedisTemplate 或 Lettuce 的简化实现
-            return Optional.ofNullable(redisStreamUtil.queryGroups(streamKey))
+            return Optional.ofNullable(stringRedisService.queryGroups(streamKey))
                     .map(groups -> groups.stream().anyMatch(g -> groupName.equals(g.groupName())))
                     .orElse(false);
         } catch (Exception e) {

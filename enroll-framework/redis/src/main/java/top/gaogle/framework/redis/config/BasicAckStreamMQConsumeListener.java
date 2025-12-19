@@ -23,12 +23,12 @@ import java.util.Objects;
 public class BasicAckStreamMQConsumeListener implements StreamListener<String, MapRecord<String, String, String>> {
 
     @Resource
-    private StringRedisService redisStreamUtil;
+    private StringRedisService stringRedisService;
     @Resource
     private Map<String, RedisStreamMQConsumer> redisConsumer;
 
     @Resource
-    private  Environment environment;
+    private Environment environment;
 
     /**
      * 监听器
@@ -57,7 +57,7 @@ public class BasicAckStreamMQConsumeListener implements StreamListener<String, M
             try {
                 redisStreamMQConsumer.dealMsg(message);
                 //逻辑处理完成后，ack消息，删除消息，group为消费组名称
-                redisStreamUtil.ack(streamName, redisStreamMQ.groupName(), recordId.getValue());
+                stringRedisService.ack(streamName, redisStreamMQ.groupName(), recordId.getValue());
             } catch (Exception e) {
                 redisStreamMQConsumer.fallBack(message);
                 throw new RuntimeException(e);

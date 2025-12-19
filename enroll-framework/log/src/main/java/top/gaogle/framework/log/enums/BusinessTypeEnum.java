@@ -1,54 +1,60 @@
 package top.gaogle.framework.log.enums;
 
+import top.gaogle.framework.commons.pojo.IndexedEnum;
+
 /**
  * 业务操作类型
  *
- * @author ruoyi
+ * @author gaogle
  */
-public enum BusinessTypeEnum {
+
+public enum BusinessTypeEnum implements IndexedEnum<Integer> {
     /**
      * 其它
      */
-    OTHER,
+    OTHER(0, "其它"),
 
     /**
      * 新增
      */
-    INSERT,
+    INSERT(1, "新增"),
 
     /**
      * 修改
      */
-    UPDATE,
+    UPDATE(2, "修改"),
 
     /**
      * 删除
      */
-    DELETE,
+    DELETE(3, "删除"),
 
     /**
      * 授权
      */
-    GRANT,
-
-    /**
-     * 导出
-     */
-    EXPORT,
-
-    /**
-     * 导入
-     */
-    IMPORT,
-
-    /**
-     * 强退
-     */
-    FORCE,
-
+    GRANT(4, "授权"),
 
     /**
      * 清空数据
      */
-    CLEAN,
+    CLEAN(5, "清空数据");
+
+
+    private final Integer value;
+    private final String title;
+
+    BusinessTypeEnum(Integer value, String title) {
+        this.value = value;
+        this.title = title;
+    }
+
+    @Override
+    public Integer value() {
+        return value;
+    }
+
+    @Override
+    public String title() {
+        return title;
+    }
 }

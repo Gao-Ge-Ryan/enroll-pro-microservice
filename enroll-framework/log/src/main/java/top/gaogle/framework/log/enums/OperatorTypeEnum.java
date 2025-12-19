@@ -1,24 +1,49 @@
 package top.gaogle.framework.log.enums;
 
+import top.gaogle.framework.commons.pojo.IndexedEnum;
+
 /**
  * 操作人类别
- * 
- * @author ruoyi
+ *
+ * @author gaogle
  */
-public enum OperatorTypeEnum
-{
+public enum OperatorTypeEnum implements IndexedEnum<Integer> {
+
     /**
      * 其它
      */
-    OTHER,
+    OTHER(0, "其它"),
 
     /**
-     * 后台用户
+     * 客户端
      */
-    MANAGE,
+    CLIENT(1, "客户端"),
 
     /**
-     * 手机端用户
+     * 企业端
      */
-    MOBILE
+    ENTERPRISE(2, "企业端"),
+
+    /**
+     * 管理端
+     */
+    ADMIN(3, "管理端");
+
+    private final Integer value;
+    private final String title;
+
+    OperatorTypeEnum(Integer value, String title) {
+        this.value = value;
+        this.title = title;
+    }
+
+    @Override
+    public Integer value() {
+        return value;
+    }
+
+    @Override
+    public String title() {
+        return title;
+    }
 }

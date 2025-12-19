@@ -23,6 +23,12 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
 import java.util.Objects;
 
+/**
+ * MyBatis 多数据源配置
+ *
+ * @author gaogle
+ * @since 1.0.0
+ */
 @Configuration
 @AutoConfigureBefore({
         DataSourceAutoConfiguration.class,
@@ -72,6 +78,9 @@ public class MybatisDataSourceConfig {
     @Value("${spring.datasource.druid.connectProperties}")
     private String connectProperties;
 
+    public final static String TYPE_HANDLERS_PACKAGE = "top.gaogle.framework.mybatis";
+    public final static String MAPPER_LOCATIONS = "classpath:mapper/master/*.xml";
+
 
     @Primary
     @Bean("masterDataSource")
@@ -108,10 +117,10 @@ public class MybatisDataSourceConfig {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("masterDataSource") DataSource masterDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         // 设置TypeHandler位置
-        bean.setTypeHandlersPackage("top.gaogle.framework.config");
+        bean.setTypeHandlersPackage(TYPE_HANDLERS_PACKAGE);
         bean.setDataSource(masterDataSource);
         bean.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources("classpath:mapper/master/*.xml"));
+                new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATIONS));
         org.apache.ibatis.session.Configuration configuration = Objects.requireNonNull(bean.getObject()).getConfiguration();
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setCallSettersOnNulls(true);
@@ -143,10 +152,10 @@ public class MybatisDataSourceConfig {
     public SqlSessionFactory slaveSqlSessionFactory(@Qualifier("slaveDataSource") DataSource slaveDataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         // 设置TypeHandler位置
-        bean.setTypeHandlersPackage("top.gaogle.framework.config");
+        bean.setTypeHandlersPackage(TYPE_HANDLERS_PACKAGE);
         bean.setDataSource(slaveDataSource);
         bean.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources("classpath:mapper/slave/*.xml"));
+                new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATIONS));
         org.apache.ibatis.session.Configuration configuration = Objects.requireNonNull(bean.getObject()).getConfiguration();
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setCallSettersOnNulls(true);

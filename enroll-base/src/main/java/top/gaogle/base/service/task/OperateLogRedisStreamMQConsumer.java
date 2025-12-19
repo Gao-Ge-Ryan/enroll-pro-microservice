@@ -35,10 +35,9 @@ public class OperateLogRedisStreamMQConsumer extends SuperService implements Red
         Map<String, String> msg = message.getValue();
         String operateLogJson = msg.get(OPERATE_LOG_KEY);
         if (StringUtil.isNotBlank(operateLogJson)) {
-            OperateLog operateLog = JsonUtil.json2Object(operateLogJson, OperateLog.class);
+            OperateLog operateLog = JsonUtil.json2ObjectByGson(operateLogJson, OperateLog.class);
             operateLogMapper.insert(operateLog);
         }
-        int i =1/0;
         redisService.deleteStreamMsg(streamName, recordId.getValue());
     }
 
@@ -50,7 +49,7 @@ public class OperateLogRedisStreamMQConsumer extends SuperService implements Red
         RecordId recordId = message.getId();
         //消息内容
         Map<String, String> msg = message.getValue();
-        log.error("OperateLogRedisStreamMQConsumer消费失败,message:{}", JsonUtil.object2Json(message));
-//        redisService.deleteStreamMsg(streamName, recordId.getValue());
+        log.error("OperateLogRedisStreamMQConsumer消费失败,message:{}", JsonUtil.object2JsonByJackson(message));
+        redisService.deleteStreamMsg(streamName, recordId.getValue());
     }
 }

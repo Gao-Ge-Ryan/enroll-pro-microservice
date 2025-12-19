@@ -31,7 +31,7 @@ public @interface Log {
     /**
      * 操作人类别
      */
-    OperatorTypeEnum operatorType() default OperatorTypeEnum.MANAGE;
+    OperatorTypeEnum operatorType() default OperatorTypeEnum.OTHER;
 
     /**
      * 是否保存请求的参数

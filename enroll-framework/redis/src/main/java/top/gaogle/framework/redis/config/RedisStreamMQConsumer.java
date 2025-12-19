@@ -2,6 +2,12 @@ package top.gaogle.framework.redis.config;
 
 import org.springframework.data.redis.connection.stream.MapRecord;
 
+/**
+ * 消费者接口
+ *
+ * @author gaogle
+ * @since 1.0.0
+ */
 public interface RedisStreamMQConsumer {
 
     String REDIS_STREAM_MQ_KEY = "REDIS_STREAM_MQ";

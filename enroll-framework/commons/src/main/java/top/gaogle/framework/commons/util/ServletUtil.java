@@ -109,7 +109,7 @@ public class ServletUtil {
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
         I18nResult<Object> result = I18nResult.newInstance();
         result.failed().setStatus(status).setMessage(msg).setData(value);
-        DataBuffer dataBuffer = response.bufferFactory().wrap(JsonUtil.object2Json(result).getBytes(StandardCharsets.UTF_8));
+        DataBuffer dataBuffer = response.bufferFactory().wrap(JsonUtil.object2JsonByJackson(result).getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(dataBuffer));
     }
 

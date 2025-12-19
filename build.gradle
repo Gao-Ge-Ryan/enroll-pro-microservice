@@ -17,6 +17,7 @@ ext {
             transmittable: '2.14.4',
             auth0: '4.4.0',
             crypto: '5.7.11',
+            gson: '2.10.1',
     ]
 }
 

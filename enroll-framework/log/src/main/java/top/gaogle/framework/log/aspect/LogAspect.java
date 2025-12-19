@@ -40,9 +40,7 @@ import static top.gaogle.framework.redis.config.RedisStreamMQConsumer.REDIS_STRE
 public class LogAspect extends SuperService {
 
 
-    private final StringRedisService redisService;
     private final StringRedisService stringRedisService;
-
 
 
     /**
@@ -62,8 +60,8 @@ public class LogAspect extends SuperService {
     public static final String OPERATE_LOG_KEY = "OPERATE_LOG";
 
     @Autowired
-    public LogAspect(StringRedisService redisService, StringRedisService stringRedisService) {
-        this.redisService = redisService;
+    public LogAspect(StringRedisService stringRedisService) {
+
         this.stringRedisService = stringRedisService;
     }
 
@@ -131,11 +129,11 @@ public class LogAspect extends SuperService {
             operLog.setCreateAt(DateUtil.currentTimeMillis());
             // 保存(redis生产-消费模式)
             Map<String, String> map = new HashMap<>();
-            map.put(OPERATE_LOG_KEY, JsonUtil.object2Json(operLog));
+            map.put(OPERATE_LOG_KEY, JsonUtil.object2JsonByGson(operLog));
             stringRedisService.addStreamMsg(StringUtil.joinWithColon(REDIS_STREAM_MQ_KEY, OPERATE_LOG_KEY), map);
         } catch (Exception exp) {
             // 记录本地异常日志
-            log.error("LogAspect异常信息operLog:{},joinPoint:{}", JsonUtil.object2Json(operLog), JsonUtil.object2Json(joinPoint), exp);
+            log.error("LogAspect异常信息operLog:{},joinPoint:{}", JsonUtil.object2JsonByJackson(operLog), JsonUtil.object2JsonByJackson(joinPoint), exp);
         } finally {
             TIME_THREADLOCAL.remove();
         }
@@ -161,7 +159,7 @@ public class LogAspect extends SuperService {
         }
         // 是否需要保存response，参数和值
         if (log.isSaveResponseData() && StringUtil.isNotNull(jsonResult)) {
-            operLog.setJsonResult(StringUtil.substring(JsonUtil.object2Json(jsonResult), 0, PARAM_MAX_LENGTH));
+            operLog.setJsonResult(StringUtil.substring(JsonUtil.object2JsonByJackson(jsonResult), 0, PARAM_MAX_LENGTH));
         }
     }
 
@@ -177,7 +175,7 @@ public class LogAspect extends SuperService {
             String params = argsArrayToString(joinPoint.getArgs(), excludeParamNames);
             operLog.setOperateParam(StringUtil.substring(params, 0, PARAM_MAX_LENGTH));
         } else {
-            operLog.setOperateParam(StringUtil.substring(JsonUtil.object2Json(paramsMap, excludeParamNames), 0, PARAM_MAX_LENGTH));
+            operLog.setOperateParam(StringUtil.substring(JsonUtil.object2JsonByJackson(paramsMap, excludeParamNames), 0, PARAM_MAX_LENGTH));
         }
     }
 
@@ -190,7 +188,7 @@ public class LogAspect extends SuperService {
             for (Object o : paramsArray) {
                 if (StringUtil.isNotNull(o) && !isFilterObject(o)) {
                     try {
-                        String jsonObj = JsonUtil.object2Json(o, excludeParamNames);
+                        String jsonObj = JsonUtil.object2JsonByJackson(o, excludeParamNames);
                         params.append(jsonObj).append(" ");
                     } catch (Exception e) {
                         log.error("请求参数拼装异常 msg:{}, 参数:{}", e.getMessage(), paramsArray, e);

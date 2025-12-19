@@ -54,7 +54,7 @@ public class TokenService {
         try {
             if (StringUtils.isNotEmpty(userKey)) {
                 String userJson = stringRedisService.getCacheObject(getTokenKey(userKey));
-                return JsonUtil.json2Object(userJson, LoginUser.class);
+                return JsonUtil.json2ObjectByJackson(userJson, LoginUser.class);
             }
         } catch (Exception e) {
             log.error("获取用户信息异常'{}'", e.getMessage());
@@ -101,7 +101,7 @@ public class TokenService {
         loginUser.setExpireTime(loginUser.getLoginTime() + TOKEN_EXPIRE_TIME * MILLIS_MINUTE);
         // 根据uuid将loginUser缓存
         String userKey = getTokenKey(loginUser.getToken());
-        stringRedisService.setCacheObject(userKey, JsonUtil.object2Json(loginUser), TOKEN_EXPIRE_TIME, TimeUnit.MINUTES);
+        stringRedisService.setCacheObject(userKey, JsonUtil.object2JsonByJackson(loginUser), TOKEN_EXPIRE_TIME, TimeUnit.MINUTES);
     }
 
     private String getTokenKey(String token) {

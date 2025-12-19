@@ -14,6 +14,12 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 枚举类型处理器
+ *
+ * @author gaogle
+ * @since 1.0.0
+ */
 @MappedTypes(IndexedEnum.class)
 public class IndexedEnumTypeHandler<E extends IndexedEnum<Serializable>> extends BaseTypeHandler<E> {
     private final Class<E> type;

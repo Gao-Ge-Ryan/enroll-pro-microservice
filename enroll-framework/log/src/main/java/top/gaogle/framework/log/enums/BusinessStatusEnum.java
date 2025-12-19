@@ -1,19 +1,40 @@
 package top.gaogle.framework.log.enums;
 
+import top.gaogle.framework.commons.pojo.IndexedEnum;
+
 /**
  * 操作状态
  *
  * @author gaogle
- * @since 1.0.0
  */
-public enum BusinessStatusEnum {
+public enum BusinessStatusEnum implements IndexedEnum<Integer> {
     /**
      * 成功
      */
-    SUCCESS,
+    SUCCESS(200, "成功"),
 
     /**
      * 失败
      */
-    FAIL,
+    FAIL(500, "失败"),
+    ;
+
+    private final Integer value;
+    private final String title;
+
+    BusinessStatusEnum(Integer value, String title) {
+        this.value = value;
+        this.title = title;
+    }
+
+
+    @Override
+    public Integer value() {
+        return value;
+    }
+
+    @Override
+    public String title() {
+        return title;
+    }
 }

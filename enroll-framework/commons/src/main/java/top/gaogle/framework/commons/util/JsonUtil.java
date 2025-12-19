@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.gaogle.framework.commons.common.CommonsConst;
@@ -30,6 +31,7 @@ public class JsonUtil {
 
 
     public static final ObjectMapper objectMapper = new ObjectMapper();
+    public static final Gson gson = new Gson();
 
     /**
      * 创建ArrayNode新实例
@@ -114,7 +116,7 @@ public class JsonUtil {
     }
 
 
-    public static String object2Json(Object fromValue) {
+    public static String object2JsonByJackson(Object fromValue) {
         String jsonDate = "";
         try {
             jsonDate = objectMapper.writeValueAsString(fromValue);
@@ -127,7 +129,7 @@ public class JsonUtil {
     /**
      * 将对象转为 JSON 字符串，并排除指定的字段
      */
-    public static String object2Json(Object fromValue, String[] excludeParamNames) {
+    public static String object2JsonByJackson(Object fromValue, String[] excludeParamNames) {
         if (fromValue == null) {
             return "";
         }
@@ -149,7 +151,11 @@ public class JsonUtil {
         }
     }
 
-    public static <T> T json2Object(String json, Class<T> clazz) {
+    public static String object2JsonByGson(Object fromValue) {
+        return gson.toJson(fromValue);
+    }
+
+    public static <T> T json2ObjectByJackson(String json, Class<T> clazz) {
         if (json == null || clazz == null) {
             throw new IllegalArgumentException("JSON string and class type must not be null");
         }
@@ -160,5 +166,9 @@ public class JsonUtil {
             log.error("Failed to deserialize JSON string to object. JSON: {}", json, e);
             return null; // 或者抛出异常，根据实际需求选择
         }
+    }
+
+    public static <T> T json2ObjectByGson(String json, Class<T> clazz) {
+        return gson.fromJson(json, clazz);
     }
 }
