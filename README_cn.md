@@ -27,10 +27,12 @@
 - Sentinel:1.8.6
 - Mysql:8.0.21
 - Redis:6.2.6
+- Minio:RELEASE.2022-01-04T07-41-07Z
 - Gradle
-### 前端：Vue3
-- 数据库：、Redis:latest
-- 部署: Docker、Docker-compose
+### 前端
+- Vue:3
+- Nginx:1.21.5
+### 部署: Docker、Docker-compose
 
 （注：前后端分离单体应用，请移步 [enroll-pro](https://github.com/Gao-Ge-Ryan/enroll-pro)）
 
