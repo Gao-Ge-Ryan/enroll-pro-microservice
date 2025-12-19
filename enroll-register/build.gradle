@@ -5,6 +5,7 @@ dependencies {
     implementation project(':enroll-framework:feign')
     implementation project(':enroll-framework:security')
     implementation project(':enroll-framework:redis')
+    implementation project(':enroll-framework:log')
     implementation project(':enroll-spi:auth')
 
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'

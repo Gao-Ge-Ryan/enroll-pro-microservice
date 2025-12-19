@@ -16,8 +16,17 @@
 
 ## 系统技术架构
 
-- 后端: Java:8、SpringBoot:2.5.15、SpringCloud、SpringCloudAlibaba、Mybatis、Gradle、Minio
-- 前端：Vue3
+### 后端
+- Java:8
+- SpringBoot:2.6.13
+- SpringCloud:2021.0.5
+- SpringCloudAlibaba:2021.0.5.0
+- Mybatis:2.3.1
+- Seata:1.6.1
+- Nacos:2.2.0
+- Sentinel:1.8.6
+- Gradle
+### 前端：Vue3
 - 数据库：Mysql:8.0.21、Redis:latest
 - 部署: Docker、Docker-compose
 

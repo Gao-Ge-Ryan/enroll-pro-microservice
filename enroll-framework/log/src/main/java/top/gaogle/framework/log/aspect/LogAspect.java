@@ -1,8 +1,6 @@
 package top.gaogle.framework.log.aspect;
 
 
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -14,11 +12,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
+import top.gaogle.framework.commons.service.SuperService;
 import top.gaogle.framework.commons.util.*;
 import top.gaogle.framework.log.annotation.Log;
 import top.gaogle.framework.log.enums.BusinessStatusEnum;
 import top.gaogle.framework.log.pojo.OperateLog;
-import top.gaogle.framework.redis.service.RedisService;
+import top.gaogle.framework.redis.service.StringRedisService;
 import top.gaogle.framework.security.util.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static top.gaogle.framework.redis.config.RedisStreamMQConsumer.REDIS_STREAM_MQ_KEY;
+
 /**
  * 操作日志记录处理
  *
@@ -36,10 +37,12 @@ import java.util.Objects;
  */
 @Aspect
 @Component
-public class LogAspect {
-    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
+public class LogAspect extends SuperService {
 
-    private final RedisService redisService;
+
+    private final StringRedisService redisService;
+    private final StringRedisService stringRedisService;
+
 
 
     /**
@@ -59,8 +62,9 @@ public class LogAspect {
     public static final String OPERATE_LOG_KEY = "OPERATE_LOG";
 
     @Autowired
-    public LogAspect(RedisService redisService) {
+    public LogAspect(StringRedisService redisService, StringRedisService stringRedisService) {
         this.redisService = redisService;
+        this.stringRedisService = stringRedisService;
     }
 
 
@@ -96,6 +100,7 @@ public class LogAspect {
     protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
         OperateLog operLog = new OperateLog();
         try {
+            operLog.setId(UniqueUtil.getUniqueId());
             // *========数据库日志=========*//
             operLog.setStatus(BusinessStatusEnum.SUCCESS);
             // 请求的地址
@@ -125,9 +130,9 @@ public class LogAspect {
             operLog.setCostTime(DateUtil.currentTimeMillis() - TIME_THREADLOCAL.get());
             operLog.setCreateAt(DateUtil.currentTimeMillis());
             // 保存(redis生产-消费模式)
-            Map<String, Object> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>();
             map.put(OPERATE_LOG_KEY, JsonUtil.object2Json(operLog));
-            redisService.addStreamMsg(StringUtil.joinWithColon(OPERATE_LOG_KEY), map);
+            stringRedisService.addStreamMsg(StringUtil.joinWithColon(REDIS_STREAM_MQ_KEY, OPERATE_LOG_KEY), map);
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("LogAspect异常信息operLog:{},joinPoint:{}", JsonUtil.object2Json(operLog), JsonUtil.object2Json(joinPoint), exp);

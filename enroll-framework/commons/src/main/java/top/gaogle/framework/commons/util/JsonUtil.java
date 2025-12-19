@@ -125,7 +125,7 @@ public class JsonUtil {
     }
 
     /**
-     * 将对象转为 JSON 字符串，并排除指定的字段（支持任意对象，无需注解）
+     * 将对象转为 JSON 字符串，并排除指定的字段
      */
     public static String object2Json(Object fromValue, String[] excludeParamNames) {
         if (fromValue == null) {

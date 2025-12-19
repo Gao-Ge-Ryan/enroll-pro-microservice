@@ -1,6 +1,7 @@
 package top.gaogle.framework.log.annotation;
 
 
+import org.springframework.core.annotation.AliasFor;
 import top.gaogle.framework.log.enums.BusinessTypeEnum;
 import top.gaogle.framework.log.enums.OperatorTypeEnum;
 
@@ -19,30 +20,34 @@ public @interface Log {
     /**
      * 模块
      */
-    public String title() default "";
+    @AliasFor("value")
+    String title() default "";
 
     /**
      * 功能
      */
-    public BusinessTypeEnum businessType() default BusinessTypeEnum.OTHER;
+    BusinessTypeEnum businessType() default BusinessTypeEnum.OTHER;
 
     /**
      * 操作人类别
      */
-    public OperatorTypeEnum operatorType() default OperatorTypeEnum.MANAGE;
+    OperatorTypeEnum operatorType() default OperatorTypeEnum.MANAGE;
 
     /**
      * 是否保存请求的参数
      */
-    public boolean isSaveRequestData() default true;
+    boolean isSaveRequestData() default true;
 
     /**
      * 是否保存响应的参数
      */
-    public boolean isSaveResponseData() default true;
+    boolean isSaveResponseData() default true;
 
     /**
      * 排除指定的请求参数
      */
-    public String[] excludeParamNames() default {};
+    String[] excludeParamNames() default {};
+
+    @AliasFor("title")
+    String value() default "";
 }

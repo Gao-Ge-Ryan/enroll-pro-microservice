@@ -91,8 +91,6 @@ redis:
     mq:
       enable: true
       configs:
-        - stream-name: OPERATE_LOG
-          group-name: OPERATE_LOG_GROUP
-          consumer-name: OPERATE_LOG_CONSUMER
+        - stream-name: REDIS_STREAM_MQ:OPERATE_LOG
 
 

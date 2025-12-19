@@ -1,12 +1,13 @@
 package top.gaogle.framework.redis.config;
 
 import org.springframework.aop.support.AopUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.data.redis.connection.stream.RecordId;
 import org.springframework.data.redis.stream.StreamListener;
 import org.springframework.stereotype.Component;
 import top.gaogle.framework.redis.annotation.RedisStreamMQ;
-import top.gaogle.framework.redis.service.RedisService;
+import top.gaogle.framework.redis.service.StringRedisService;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -22,9 +23,12 @@ import java.util.Objects;
 public class BasicAckStreamMQConsumeListener implements StreamListener<String, MapRecord<String, String, String>> {
 
     @Resource
-    private RedisService redisStreamUtil;
+    private StringRedisService redisStreamUtil;
     @Resource
     private Map<String, RedisStreamMQConsumer> redisConsumer;
+
+    @Resource
+    private  Environment environment;
 
     /**
      * 监听器
@@ -42,10 +46,12 @@ public class BasicAckStreamMQConsumeListener implements StreamListener<String, M
             RedisStreamMQConsumer redisStreamMQConsumer = redisConsumerEntry.getValue();
             Class<?> targetClass = AopUtils.getTargetClass(redisStreamMQConsumer);
             RedisStreamMQ redisStreamMQ = targetClass.getAnnotation(RedisStreamMQ.class);
+
             if (Objects.isNull(redisStreamMQ)) {
                 continue;
             }
-            if (!Objects.equals(streamName, redisStreamMQ.streamName())) {
+            String resolvedStreamName = environment.resolvePlaceholders(redisStreamMQ.streamName());
+            if (!Objects.equals(streamName, resolvedStreamName)) {
                 continue;
             }
             try {

@@ -11,6 +11,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static top.gaogle.framework.redis.config.RedisStreamMQConsumer.DEFAULT_GROUP;
+
 /**
  * stream消费者创建注解
  *
@@ -20,7 +22,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @Component
-@Import({RedisStreamMQConfiguration.class, BasicAckStreamMQConsumeListener.class, RedisStreamMQProperties. class})
+@Import({RedisStreamMQConfiguration.class, BasicAckStreamMQConsumeListener.class, RedisStreamMQProperties.class})
 public @interface RedisStreamMQ {
 
     /**
@@ -33,6 +35,6 @@ public @interface RedisStreamMQ {
      * 消费组
      * 不设计数组: 1. 接口应遵循单一职责 2.数组带来ack应答问题
      */
-    String groupName();
+    String groupName() default DEFAULT_GROUP;
 
 }

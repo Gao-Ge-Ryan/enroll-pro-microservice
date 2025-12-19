@@ -10,8 +10,9 @@ import org.springframework.data.redis.connection.stream.*;
 import org.springframework.data.redis.stream.StreamMessageListenerContainer;
 import org.springframework.data.redis.stream.Subscription;
 import org.springframework.util.CollectionUtils;
+import top.gaogle.framework.commons.util.StringUtil;
 import top.gaogle.framework.redis.pojo.RedisMq;
-import top.gaogle.framework.redis.service.RedisService;
+import top.gaogle.framework.redis.service.StringRedisService;
 
 import javax.annotation.Resource;
 import java.time.Duration;
@@ -20,6 +21,9 @@ import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static top.gaogle.framework.redis.config.RedisStreamMQConsumer.DEFAULT_GROUP;
+import static top.gaogle.framework.redis.config.RedisStreamMQConsumer.DEFAULT_GROUP_CONSUMER;
 
 /**
  * stream配置绑定关系
@@ -36,12 +40,14 @@ public class RedisStreamMQConfiguration {
     @Resource
     private BasicAckStreamMQConsumeListener basicAckStreamMQConsumeListener;
     @Resource
-    private RedisService redisStreamUtil;
+    private StringRedisService redisStreamUtil;
     @Resource
     private RedisStreamMQProperties redisStreamMQProperties;
 
+
     private static final int BATCHSIZE = 5;     // 一次最多获取多少条消息
     private static final long POLL_TIMEOUT = 3;  // Stream 中没有消息时，阻塞多长时间，需要比 `spring.redis.timeout` 的时间小
+
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     public StreamMessageListenerContainer<String, MapRecord<String, String, String>> streamMessageListenerContainer() {
@@ -94,6 +100,15 @@ public class RedisStreamMQConfiguration {
             String streamName = config.getStreamName();
             String groupName = config.getGroupName();
             String consumerName = config.getConsumerName();
+            if (StringUtil.isBlank(streamName)) {
+                continue;
+            }
+            if (StringUtil.isBlank(groupName)) {
+                groupName = DEFAULT_GROUP;
+            }
+            if (StringUtil.isBlank(consumerName)) {
+                consumerName = DEFAULT_GROUP_CONSUMER;
+            }
             initStreamAndGroup(streamName, groupName, consumerName);
             //配置消费组
             StreamMessageListenerContainer.ConsumerStreamReadRequest<String> build = StreamMessageListenerContainer
@@ -124,11 +139,11 @@ public class RedisStreamMQConfiguration {
                 redisStreamUtil.createGroup(streamKey, groupName);
                 log.info("Group {} initialized for existing stream {}", groupName, streamKey);
             }
-            List<MapRecord<String, String, Object>> pendingList = redisStreamUtil.getPendingList(streamKey, groupName);
+            List<MapRecord<String, String, String>> pendingList = redisStreamUtil.getPendingList(streamKey, groupName);
             if (!CollectionUtils.isEmpty(pendingList)) {
-                for (MapRecord<String, String, Object> pending : pendingList) {
+                for (MapRecord<String, String, String> pending : pendingList) {
                     RecordId id = pending.getId();
-                    Map<String, Object> value = pending.getValue();
+                    Map<String, String> value = pending.getValue();
                     // todo gaoge 得改成原子操作，或者怎么让PEL重新消费
 //                    redisStreamUtil.xClaim(streamKey, groupName,consumerName, id);
 //                    redisStreamUtil.resetPendingListToStream(streamKey, id.getValue(), value);

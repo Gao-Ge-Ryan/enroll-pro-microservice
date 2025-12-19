@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-top.gaogle.framework.redis.service.StringRedisService
-
+top.gaogle.framework.log.aspect.LogAspect
