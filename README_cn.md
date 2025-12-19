@@ -25,9 +25,11 @@
 - Seata:1.6.1
 - Nacos:2.2.0
 - Sentinel:1.8.6
+- Mysql:8.0.21
+- Redis:6.2.6
 - Gradle
 ### 前端：Vue3
-- 数据库：Mysql:8.0.21、Redis:latest
+- 数据库：、Redis:latest
 - 部署: Docker、Docker-compose
 
 （注：前后端分离单体应用，请移步 [enroll-pro](https://github.com/Gao-Ge-Ryan/enroll-pro)）
