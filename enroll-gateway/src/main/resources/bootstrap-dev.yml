@@ -29,7 +29,7 @@ spring:
         port: 8719 #默认8719，假如被占用了会自动从8719开始依次+1扫描。直至找到未被占用的端口
       # nacos配置持久化
       datasource:
-        ds1:
+        GW_FLOW:
           nacos:
             server-addr: 127.0.0.1:8848
             namespace: enroll-pro
@@ -38,4 +38,24 @@ spring:
             password: nacos
             dataId: sentinel-gateway-gw-flow
             data-type: json
-            rule-type: gw-flow
+            rule-type: GW_FLOW
+        DEGRADE:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            namespace: enroll-pro
+            groupId: DEFAULT_GROUP
+            username: nacos
+            password: nacos
+            dataId: sentinel-gateway-degrade
+            data-type: json
+            rule-type: DEGRADE
+        SYSTEM:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            namespace: enroll-pro
+            groupId: DEFAULT_GROUP
+            username: nacos
+            password: nacos
+            dataId: sentinel-gateway-system
+            data-type: json
+            rule-type: SYSTEM
