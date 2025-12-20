@@ -18,6 +18,8 @@ import top.gaogle.framework.commons.i18n.I18nResult;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -111,6 +113,39 @@ public class ServletUtil {
         result.failed().setStatus(status).setMessage(msg).setData(value);
         DataBuffer dataBuffer = response.bufferFactory().wrap(JsonUtil.object2JsonByJackson(result).getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(dataBuffer));
+    }
+
+    /**
+     * 设置web模型响应
+     *
+     * @param response HttpServletResponse
+     */
+    public static void webResponseWriter(HttpServletResponse response, HttpStatusEnum status, String msg) throws IOException {
+        webResponseWriter(response, status, msg, null);
+    }
+
+    /**
+     * 设置web模型响应
+     *
+     * @param response HttpServletResponse
+     */
+    public static void webResponseWriter(HttpServletResponse response, HttpStatusEnum status, String msg, Object value) throws IOException {
+        webResponseWriter(response, MediaType.APPLICATION_JSON_VALUE, status, msg, value);
+    }
+
+    /**
+     * 设置web模型响应
+     *
+     * @param response HttpServletResponse
+     */
+    public static void webResponseWriter(HttpServletResponse response, String contentType, HttpStatusEnum status, String msg, Object value) throws IOException {
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType(contentType);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        I18nResult<Object> result = I18nResult.newInstance();
+        result.failed().setStatus(status).setMessage(msg).setData(value);
+        String json = JsonUtil.object2JsonByJackson(result);
+        response.getWriter().write(json);
     }
 
     /**
