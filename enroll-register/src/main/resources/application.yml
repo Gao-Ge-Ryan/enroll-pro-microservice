@@ -86,16 +86,6 @@ seata:
       application: seata-server
 
 
-redis:
-  stream:
-    mq:
-      enable: true
-      configs:
-        - stream-name: goodsStream123
-          group-name: goodsGroup
-          consumer-name: goodsConsumer
-        - stream-name: orderStream2323
-          group-name: orderGroup
-          consumer-name: orderConsumer
+
 
 
