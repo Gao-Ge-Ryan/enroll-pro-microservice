@@ -3,12 +3,14 @@ package top.gaogle.auth.service;
 import io.seata.core.context.RootContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.gaogle.framework.commons.service.SuperService;
 import top.gaogle.auth.dao.master.TestMapper;
-import top.gaogle.framework.commons.i18n.I18nResult;
-import top.gaogle.pojo.param.auth.TestEditParam;
 import top.gaogle.auth.service.tcc.TestTCC;
+import top.gaogle.framework.commons.i18n.I18nResult;
+import top.gaogle.framework.commons.service.SuperService;
 import top.gaogle.framework.commons.util.UniqueUtil;
+import top.gaogle.pojo.param.auth.TestEditParam;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class TestService extends SuperService {
@@ -25,6 +27,7 @@ public class TestService extends SuperService {
     public I18nResult<String> test() {
         I18nResult<String> result = I18nResult.newInstance();
         try {
+            TimeUnit.SECONDS.sleep(5);
             System.out.println("================================="+ RootContext.getXID());
             TestEditParam editParam = new TestEditParam();
             editParam.setId(UniqueUtil.getUniqueId());

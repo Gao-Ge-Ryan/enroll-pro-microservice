@@ -1,5 +1,6 @@
 package top.gaogle.register.service;
 
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import top.gaogle.pojo.param.auth.TestEditParam;
 import top.gaogle.register.dao.master.TestMapper;
 import top.gaogle.register.dao.slave.TestSlaveMapper;
 import top.gaogle.spi.auth.TestFeign;
+
+import java.lang.reflect.UndeclaredThrowableException;
 
 @Service
 public class TestService extends SuperService {
@@ -48,7 +51,7 @@ public class TestService extends SuperService {
     }
 
     @GlobalTransactional(rollbackFor = Exception.class)
-    public I18nResult<String> test() {
+    public I18nResult<String> test() throws BlockException {
         I18nResult<String> result = I18nResult.newInstance();
         try {
             System.out.println("=================================" + RootContext.getXID());
@@ -67,6 +70,17 @@ public class TestService extends SuperService {
             int i = 1 / 0;
             result.succeed().setData("test");
         } catch (Exception e) {
+            Throwable cause = e;
+            if (cause instanceof UndeclaredThrowableException) {
+                cause = ((UndeclaredThrowableException) cause).getUndeclaredThrowable();
+            }
+
+            if (cause instanceof BlockException) {
+                log.warn("Sentinel blocked request: {}", cause.getMessage());
+                // BlockException 是 RuntimeException，Seata 会回滚
+                throw (BlockException) cause;
+            }
+
             log.error("test发生异常：", e);
 
             result.failed().setMessage("register_message", "test发生异常：");

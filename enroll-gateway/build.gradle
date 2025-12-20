@@ -6,8 +6,8 @@ dependencies {
     implementation(project(':enroll-framework:redis')) {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
     }
-    implementation 'com.auth0:java-jwt:'+ project.dependencyVersions.auth0
 
+    implementation 'com.auth0:java-jwt:'+ project.dependencyVersions.auth0
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     implementation 'org.springframework.boot:spring-boot'

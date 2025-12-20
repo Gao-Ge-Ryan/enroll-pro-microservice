@@ -1,5 +1,6 @@
 package top.gaogle.register.controller;
 
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class TestController {
 
     @RequiresPermissions(value = {AuthorityEnumConst.USER_VIEW_ADMIN, AuthorityEnumConst.USER_PUT_ADMIN}, logical = LogicalEnum.OR)
     @GetMapping
-    public I18nResult<String> insert() {
+    public I18nResult<String> insert() throws BlockException {
         return testService.test();
     }
 

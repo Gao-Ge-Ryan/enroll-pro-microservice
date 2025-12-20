@@ -86,6 +86,9 @@ seata:
       application: seata-server
 
 
-
+# Feign开启对Sentinel支持
+feign:
+  sentinel:
+    enabled: true
 
 
