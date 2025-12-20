@@ -9,7 +9,7 @@ include 'enroll-framework:security'
 include 'enroll-framework:feign'
 include 'enroll-framework:redis'
 include 'enroll-framework:log'
-
+include 'enroll-framework:sentinel'
 
 include 'enroll-spi'
 include 'enroll-spi:auth'
@@ -22,3 +22,4 @@ include 'enroll-file'
 include 'enroll-register'
 include 'enroll-bill'
 include 'enroll-base'
+

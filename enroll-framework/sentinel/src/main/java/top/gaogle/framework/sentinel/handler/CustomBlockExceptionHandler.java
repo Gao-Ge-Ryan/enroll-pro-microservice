@@ -1,4 +1,4 @@
-package top.gaogle.auth.config;
+package top.gaogle.framework.sentinel.handler;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
@@ -15,6 +15,12 @@ import top.gaogle.framework.commons.util.ServletUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 自定义限流异常处理
+ *
+ * @author gaogle
+ * @since 1.0.0
+ */
 @Component
 public class CustomBlockExceptionHandler extends SuperService implements BlockExceptionHandler {
     @Override
