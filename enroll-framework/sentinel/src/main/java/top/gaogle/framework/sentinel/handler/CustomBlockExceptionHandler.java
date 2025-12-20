@@ -25,19 +25,17 @@ import javax.servlet.http.HttpServletResponse;
 public class CustomBlockExceptionHandler extends SuperService implements BlockExceptionHandler {
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, BlockException e) throws Exception {
-        String message = null;
+        String message = "系统开小差了，请稍后再试";
         if (e instanceof FlowException) {
-            message = "接口被限流了";
+            message = "当前系统繁忙，请稍后再试";
         } else if (e instanceof DegradeException) {
-            message = "接口被降级了";
+            message = "服务暂时不可用，请稍后重试哦";
         } else if (e instanceof ParamFlowException) {
-            message = "接口热点参数限流了";
+            message = "请求过于频繁，请稍等片刻再试";
         } else if (e instanceof SystemBlockException) {
-            message = "接口触发系统保护规则了";
+            message = "系统正在保护中，请稍后再试";
         } else if (e instanceof AuthorityException) {
-            message = "授权接口不通过";
-        } else {
-            message = e.getMessage();
+            message = "您暂无权限访问该功能，请联系管理员";
         }
         ServletUtil.webResponseWriter(httpServletResponse, HttpStatusEnum.INTERNAL_SERVER_ERROR, message);
 

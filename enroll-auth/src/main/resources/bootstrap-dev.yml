@@ -37,6 +37,6 @@ spring:
             groupId: DEFAULT_GROUP
             username: nacos
             password: nacos
-            dataId: sentinel-auth-gw-flow
+            dataId: sentinel-auth-flow
             data-type: json
             rule-type: flow

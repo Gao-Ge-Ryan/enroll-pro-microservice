@@ -91,7 +91,7 @@ public class RedisStreamMQConfiguration {
     @Bean
     public List<Subscription> createSubscription(StreamMessageListenerContainer<String, MapRecord<String, String, String>> listenerContainer) {
         // 创建不同的订阅者
-        List<RedisMq> configs = Objects.requireNonNull(redisStreamMQProperties.getConfigs(), "config error: config is null");
+        Collection<RedisMq> configs = redisStreamMQProperties.getConfigs().values();
         List<Subscription> subscriptions = new ArrayList<>();
         for (RedisMq config : configs) {
             String streamName = config.getStreamName();

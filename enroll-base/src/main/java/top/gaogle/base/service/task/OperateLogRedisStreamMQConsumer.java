@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static top.gaogle.framework.log.aspect.LogAspect.OPERATE_LOG_KEY;
 
-@RedisStreamMQ(streamName = "REDIS_STREAM_MQ:OPERATE_LOG")
+@RedisStreamMQ(streamName = "${redis.stream.mq.configs.operateLog.streamName}")
 public class OperateLogRedisStreamMQConsumer extends SuperService implements RedisStreamMQConsumer {
     private final StringRedisService redisService;
     private final OperateLogMapper operateLogMapper;

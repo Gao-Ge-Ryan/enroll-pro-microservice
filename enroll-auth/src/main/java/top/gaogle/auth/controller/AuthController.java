@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.gaogle.auth.service.AuthService;
 import top.gaogle.framework.commons.i18n.I18nResult;
+import top.gaogle.framework.log.annotation.Log;
 import top.gaogle.pojo.entity.auth.AuthenticationPacket;
 
 import java.util.Map;
@@ -31,6 +32,7 @@ public class AuthController {
     /**
      * 登录接口
      */
+    @Log("登录接口")
     @PostMapping("/login")
     public I18nResult<Map<String, Object>> login(@RequestBody AuthenticationPacket authenticationPacket) {
         return authService.login(authenticationPacket);

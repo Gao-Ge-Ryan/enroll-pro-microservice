@@ -91,6 +91,7 @@ redis:
     mq:
       enable: true
       configs:
-        - stream-name: REDIS_STREAM_MQ:OPERATE_LOG
+        operateLog:
+          streamName: REDIS_STREAM_MQ:OPERATE_LOG
 
 

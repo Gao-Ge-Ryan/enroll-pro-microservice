@@ -5,6 +5,7 @@ dependencies {
     implementation project(':enroll-framework:security')
     implementation project(':enroll-framework:redis')
     implementation project(':enroll-framework:sentinel')
+    implementation project(':enroll-framework:log')
 
     implementation 'com.auth0:java-jwt:'+ project.dependencyVersions.auth0
 
