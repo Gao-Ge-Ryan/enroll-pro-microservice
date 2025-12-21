@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import top.gaogle.framework.commons.i18n.I18nResult;
 import top.gaogle.framework.log.annotation.Log;
 import top.gaogle.framework.redis.pojo.ProducerParam;
-
 import top.gaogle.framework.redis.service.StringRedisService;
+import top.gaogle.framework.security.annotation.RateLimiter;
 import top.gaogle.framework.security.annotation.RequiresPermissions;
+import top.gaogle.framework.security.enums.LimitTypeEnum;
 import top.gaogle.framework.security.enums.LogicalEnum;
 import top.gaogle.pojo.enums.security.AuthorityEnumConst;
 import top.gaogle.register.service.TestService;
@@ -37,6 +38,7 @@ public class TestController {
 
     @RequiresPermissions(value = {AuthorityEnumConst.USER_VIEW_ADMIN, AuthorityEnumConst.USER_PUT_ADMIN}, logical = LogicalEnum.OR)
     @GetMapping
+    @RateLimiter(time = 60, count = 1, limitType = LimitTypeEnum.IP)
     public I18nResult<String> insert() throws BlockException {
         return testService.test();
     }

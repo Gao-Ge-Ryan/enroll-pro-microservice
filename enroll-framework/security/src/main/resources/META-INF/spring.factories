@@ -3,4 +3,5 @@ top.gaogle.framework.security.service.TokenService,\
 top.gaogle.framework.security.config.WebMvcConfig,\
 top.gaogle.framework.security.handler.GlobalExceptionHandler,\
 top.gaogle.framework.security.aspect.InnerAuthAspect,\
-top.gaogle.framework.security.aspect.PreAuthorizeAspect  
+top.gaogle.framework.security.aspect.PreAuthorizeAspect,\
+top.gaogle.framework.security.aspect.RateLimiterAspect    

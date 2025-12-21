@@ -8,6 +8,7 @@ import org.springframework.data.redis.connection.stream.StreamInfo;
 import org.springframework.data.redis.connection.stream.StreamOffset;
 import org.springframework.data.redis.core.StreamOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 import top.gaogle.framework.commons.util.StringUtil;
 
@@ -28,11 +29,13 @@ import java.util.concurrent.TimeUnit;
 public class StringRedisService {
 
     private final StringRedisTemplate stringRedisTemplate;
+    private final RedisScript<Long> limitScript;
 
 
-    public StringRedisService(StringRedisTemplate stringRedisTemplate) {
+    public StringRedisService(StringRedisTemplate stringRedisTemplate, RedisScript<Long> limitScript) {
         this.stringRedisTemplate = stringRedisTemplate;
 
+        this.limitScript = limitScript;
     }
 
     /**
@@ -206,6 +209,10 @@ public class StringRedisService {
             return Collections.emptyList();
         }
         return streamOps.range(stream, Range.closed(msgId, msgId), RedisZSetCommands.Limit.unlimited());
+    }
+
+    public Long executeLimitScript(List<String> keys, Object... args) {
+        return stringRedisTemplate.execute(limitScript, keys, args);
     }
 
 }

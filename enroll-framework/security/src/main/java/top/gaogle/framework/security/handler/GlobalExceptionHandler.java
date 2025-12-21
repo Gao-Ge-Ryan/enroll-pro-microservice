@@ -3,13 +3,16 @@ package top.gaogle.framework.security.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import top.gaogle.framework.commons.enums.HttpStatusEnum;
+import top.gaogle.framework.commons.exception.RateLimiterException;
 import top.gaogle.framework.commons.exception.ServiceException;
 import top.gaogle.framework.commons.exception.auth.NotPermissionException;
 import top.gaogle.framework.commons.exception.auth.NotRoleException;
@@ -91,6 +94,17 @@ public class GlobalExceptionHandler {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',发生未知异常.", requestURI, e);
         return result.failed().setMessage(e.getMessage());
+    }
+
+    /**
+     * 限流异常拦截
+     */
+    @ExceptionHandler({RateLimiterException.class})
+    @ResponseBody
+    public ResponseEntity<I18nResult<String>> handleRateLimiterException(Exception ex) {
+        I18nResult<String> result = I18nResult.newInstance();
+        result.failedBadRequest().setMessage(ex.getMessage());
+        return result.toResponseEntity();
     }
 
     /**
