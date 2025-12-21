@@ -19,7 +19,4 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
     implementation 'com.alibaba.cloud:spring-cloud-alibaba-sentinel-gateway'
     implementation 'com.alibaba.csp:sentinel-datasource-nacos'
-    implementation 'com.alibaba.csp:sentinel-core'
-    implementation 'com.alibaba.csp:sentinel-transport-simple-http  '
-
 }
