@@ -7,7 +7,10 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import top.gaogle.framework.security.filter.RepeatableFilter;
+import top.gaogle.framework.security.filter.SecurityHeadersFilter;
 import top.gaogle.framework.security.filter.XssFilter;
+import top.gaogle.framework.security.property.XssProperties;
 
 import javax.servlet.DispatcherType;
 import java.util.HashMap;
@@ -29,6 +32,19 @@ public class FilterConfig {
     @Autowired
     public FilterConfig(XssProperties xssProperties) {
         this.xssProperties = xssProperties;
+    }
+
+    /**
+     * 配置重复提交过滤器
+     */
+    @Bean
+    public FilterRegistrationBean<RepeatableFilter> repeatableFilterRegistration() {
+        FilterRegistrationBean<RepeatableFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(new RepeatableFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("repeatableFilter");
+        registration.setOrder(FilterRegistrationBean.LOWEST_PRECEDENCE);
+        return registration;
     }
 
 
@@ -81,7 +97,7 @@ public class FilterConfig {
 
         registration.setName("XssFilter");
         // 使用常量代替魔法数字（可选：定义在类中或配置中）
-        registration.setOrder(Integer.MAX_VALUE - 1); // 接近最低优先级，但保留一点空间
+        registration.setOrder(FilterRegistrationBean.LOWEST_PRECEDENCE - 1); // 接近最低优先级，但保留一点空间
 
         // 初始化参数
         Map<String, String> initParameters = new HashMap<>();

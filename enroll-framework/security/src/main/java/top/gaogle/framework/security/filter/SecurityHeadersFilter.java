@@ -1,4 +1,4 @@
-package top.gaogle.framework.security.config;
+package top.gaogle.framework.security.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author gaogle
  * @since 1.0.0
  */
-class SecurityHeadersFilter implements Filter {
+public class SecurityHeadersFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

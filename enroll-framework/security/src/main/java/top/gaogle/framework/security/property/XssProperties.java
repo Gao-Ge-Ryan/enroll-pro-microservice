@@ -1,4 +1,4 @@
-package top.gaogle.framework.security.config;
+package top.gaogle.framework.security.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
