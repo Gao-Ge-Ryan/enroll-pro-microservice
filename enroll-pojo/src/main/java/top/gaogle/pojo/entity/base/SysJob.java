@@ -1,12 +1,12 @@
-package top.gaogle.pojo.entity.register;
+package top.gaogle.pojo.entity.base;
 
 import java.io.Serializable;
 
 /**
  * 定时任务调度表(SysJob)实体类
  *
- * @author makejava
- * @since 2024-09-21 18:38:07
+ * @author gaogle
+ * @since 1.0.0
  */
 public class SysJob implements Serializable {
     private static final long serialVersionUID = -76764360526868844L;

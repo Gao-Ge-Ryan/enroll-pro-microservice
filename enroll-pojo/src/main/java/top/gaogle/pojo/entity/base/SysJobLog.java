@@ -1,4 +1,4 @@
-package top.gaogle.pojo.entity.register;
+package top.gaogle.pojo.entity.base;
 
 import java.util.Date;
 
@@ -6,6 +6,7 @@ import java.util.Date;
  * 定时任务调度日志表 sys_job_log
  *
  * @author gaogle
+ * @since 1.0.0
  */
 public class SysJobLog {
     private static final long serialVersionUID = 1L;

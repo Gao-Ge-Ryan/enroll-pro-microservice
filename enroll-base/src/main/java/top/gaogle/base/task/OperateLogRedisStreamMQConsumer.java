@@ -1,4 +1,4 @@
-package top.gaogle.base.service.task;
+package top.gaogle.base.task;
 
 import org.springframework.data.redis.connection.stream.MapRecord;
 import org.springframework.data.redis.connection.stream.RecordId;
