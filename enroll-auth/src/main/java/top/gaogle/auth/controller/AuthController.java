@@ -3,6 +3,7 @@ package top.gaogle.auth.controller;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +38,7 @@ public class AuthController {
     @SentinelResource(entryType = EntryType.IN)
     @Log("登录接口")
     @PostMapping("/login")
-    public I18nResult<Map<String, Object>> login(@RequestBody AuthenticationPacket authenticationPacket) {
+    public I18nResult<Map<String, Object>> login(@RequestBody @Validated AuthenticationPacket authenticationPacket) {
         return authService.login(authenticationPacket);
     }
 }

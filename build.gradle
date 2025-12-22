@@ -19,6 +19,7 @@ ext {
             crypto: '5.7.11',
             gson: '2.10.1',
             collections4: '4.4',
+            jsoup: '1.17.2',
     ]
 }
 

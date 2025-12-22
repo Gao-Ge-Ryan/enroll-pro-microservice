@@ -1,5 +1,7 @@
 package top.gaogle.pojo.entity.auth;
 
+import top.gaogle.framework.commons.annotation.Xss;
+
 public class AuthenticationPacket {
     /**
      * 报文密文
@@ -11,7 +13,7 @@ public class AuthenticationPacket {
     private String key;
 
     private String email;
-
+    @Xss
     private String password;
 
     /**

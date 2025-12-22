@@ -15,6 +15,12 @@ import java.util.Map;
 
 import static top.gaogle.framework.log.aspect.LogAspect.OPERATE_LOG_KEY;
 
+/**
+ * 操作日志消费者
+ *
+ * @author gaogle
+ * @since 1.0.0
+ */
 @RedisStreamMQ(streamName = "${redis.stream.mq.configs.operateLog.streamName}")
 public class OperateLogRedisStreamMQConsumer extends SuperService implements RedisStreamMQConsumer {
     private final StringRedisService redisService;

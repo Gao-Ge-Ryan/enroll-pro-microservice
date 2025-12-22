@@ -3,7 +3,8 @@ dependencies {
     api 'org.apache.commons:commons-collections4:' + project.dependencyVersions.collections4
     api 'com.google.code.gson:gson:' + project.dependencyVersions.gson
     api 'com.alibaba:transmittable-thread-local:'+ project.dependencyVersions.transmittable
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.jsoup:jsoup:'+ project.dependencyVersions.jsoup
+    api 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:' + project.dependencyVersions.pagehelper

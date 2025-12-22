@@ -3,7 +3,6 @@ package top.gaogle.framework.redis.pojo;
 import java.util.Map;
 
 public class ProducerParam {
-
     private String streamName;
     private Map<String, String> param;
 
