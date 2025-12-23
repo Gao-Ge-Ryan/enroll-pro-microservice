@@ -1,4 +1,4 @@
-package top.gaogle.framework.security.aspect;
+package top.gaogle.framework.nacos.aspect;
 
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import top.gaogle.framework.commons.util.AopUtil;
 import top.gaogle.framework.commons.util.StringUtil;
-import top.gaogle.framework.security.annotation.WatchFunction;
-import top.gaogle.framework.security.util.WatchFunctionHelper;
+import top.gaogle.framework.nacos.annotation.WatchFunction;
+import top.gaogle.framework.nacos.util.WatchFunctionHelper;
 
 
 /**

@@ -23,3 +23,5 @@ include 'enroll-register'
 include 'enroll-bill'
 include 'enroll-base'
 
+
+include 'enroll-framework:nacos'

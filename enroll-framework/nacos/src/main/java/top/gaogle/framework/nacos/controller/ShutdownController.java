@@ -1,11 +1,11 @@
-package top.gaogle.framework.security.controller;
+package top.gaogle.framework.nacos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.gaogle.framework.commons.i18n.I18nResult;
-import top.gaogle.framework.security.service.ShutdownService;
+import top.gaogle.framework.nacos.service.ShutdownService;
 
 
 /**

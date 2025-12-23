@@ -1,14 +1,14 @@
-package top.gaogle.framework.security.util;
+package top.gaogle.framework.nacos.util;
 
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.gaogle.framework.security.annotation.WatchFunctionCheckPoint;
 import top.gaogle.framework.commons.util.JsonUtil;
 import top.gaogle.framework.commons.util.ReflectTypeUtil;
 import top.gaogle.framework.commons.util.SpringUtil;
 import top.gaogle.framework.commons.util.StringUtil;
+import top.gaogle.framework.nacos.annotation.WatchFunctionCheckPoint;
 
 import java.lang.reflect.Method;
 import java.util.*;
