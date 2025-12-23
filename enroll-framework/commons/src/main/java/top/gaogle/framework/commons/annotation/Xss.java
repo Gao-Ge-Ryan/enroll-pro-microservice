@@ -14,6 +14,7 @@ import java.lang.annotation.Target;
  * 自定义xss校验注解
  *
  * @author gaogle
+ * @since 1.0.0
  */
 @Target(value = {ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

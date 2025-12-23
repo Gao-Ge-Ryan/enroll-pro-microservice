@@ -5,4 +5,6 @@ top.gaogle.framework.security.handler.GlobalExceptionHandler,\
 top.gaogle.framework.security.aspect.InnerAuthAspect,\
 top.gaogle.framework.security.aspect.PreAuthorizeAspect,\
 top.gaogle.framework.security.aspect.RateLimiterAspect,\
-top.gaogle.framework.security.config.FilterConfig      
+top.gaogle.framework.security.config.FilterConfig,\
+top.gaogle.framework.security.aspect.WatchFunctionAop,\
+top.gaogle.framework.security.config.AutoConfiguration          

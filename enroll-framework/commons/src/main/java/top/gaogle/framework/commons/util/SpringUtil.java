@@ -8,6 +8,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.util.CastUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
+import java.util.Map;
+
 @Component
 public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextAware {
 
@@ -39,5 +42,20 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
      */
     public static <T> T getBean(Class<T> clz) throws BeansException {
         return CastUtils.cast(beanFactory.getBean(clz));
+    }
+
+    /**
+     * 通过类型获取其全部的实现对象
+     *
+     * @param requiredType 类型
+     * @return bean实例
+     */
+    public static <T> Collection<T> getBeans(Class<T> requiredType) {
+        try {
+            Map<String, T> beansMap = applicationContext.getBeansOfType(requiredType);
+            return beansMap.values();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

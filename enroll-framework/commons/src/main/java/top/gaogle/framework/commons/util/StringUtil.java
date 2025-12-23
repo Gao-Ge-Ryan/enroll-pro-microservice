@@ -1,16 +1,39 @@
 package top.gaogle.framework.commons.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import top.gaogle.framework.commons.common.CommonsConst;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class StringUtil extends StringUtils {
+
+    /**
+     * 替换的占位符
+     */
+    private static final String REPLACE_CHAR_L = "{";
+    /**
+     * 替换的占位符
+     */
+    private static final String REPLACE_CHAR_R = "}";
+    /**
+     * 替换的占位符
+     */
+    private static final String REPLACE_CHAR = REPLACE_CHAR_L + REPLACE_CHAR_R;
+
+    /**
+     * 时间格式化
+     */
+    private static final String DEFAULT_DATETIME_FORMAT1 = "yyyy-MM-dd HH:mm:ss.SSS";
 
     /**
      * * 判断一个对象是否非空
@@ -111,6 +134,55 @@ public class StringUtil extends StringUtils {
             sb.append(parts[i] == null ? "" : parts[i]);
         }
         return sb.toString();
+    }
+
+    public static String UUID() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    /**
+     * 将字符串中占位符按照参数顺序
+     *
+     * @param str   原串
+     * @param paras 替换变量的值
+     * @return 替换后的串
+     */
+    public static String replaceOneByOne(String str, Object... paras) {
+        if (StringUtils.isBlank(str)) {
+            return str;
+        }
+
+        if (paras == null || paras.length < 1) {
+            return str;
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Object para : paras) {
+            int index = str.indexOf(REPLACE_CHAR);
+            if (index < 0) {
+                break;
+            }
+            stringBuilder.append(str, 0, index);
+            str = str.substring(index + REPLACE_CHAR.length());
+
+            String replacement;
+            if (para == null) {
+                replacement = "null";
+            } else if (para instanceof Date) {
+                replacement = DateFormatUtils.format(
+                        (Date) para,
+                        DEFAULT_DATETIME_FORMAT1);
+            } else if (para instanceof ZonedDateTime) {
+                replacement = ((ZonedDateTime) para).format(
+                        DateTimeFormatter.ofPattern(DEFAULT_DATETIME_FORMAT1));
+            } else {
+                replacement = para.toString();
+            }
+            stringBuilder.append(replacement);
+        }
+        stringBuilder.append(str);
+
+        return stringBuilder.toString();
     }
 
 

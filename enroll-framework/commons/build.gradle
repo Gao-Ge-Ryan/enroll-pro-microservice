@@ -6,6 +6,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:'+ project.dependencyVersions.jsoup
     api 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:' + project.dependencyVersions.pagehelper
+    implementation 'io.github.classgraph:classgraph:' + project.dependencyVersions.classgraph
 }

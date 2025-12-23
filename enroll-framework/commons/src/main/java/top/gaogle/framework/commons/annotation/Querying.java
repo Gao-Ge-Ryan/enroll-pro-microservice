@@ -19,6 +19,8 @@ package top.gaogle.framework.commons.annotation;
 import java.lang.annotation.*;
 
 /**
+ * 查询参数注解
+ *
  * @author gaogle
  * @since 2.0.0
  */

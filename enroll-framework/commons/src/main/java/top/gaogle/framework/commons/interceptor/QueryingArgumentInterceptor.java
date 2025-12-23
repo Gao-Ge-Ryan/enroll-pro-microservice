@@ -28,7 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
+ * SuperQuerying通过代理取值
  *
  * @author gaogle
  * @since 2.0.0
