@@ -25,6 +25,7 @@
 - Seata:1.6.1
 - Nacos:2.2.0
 - Sentinel:1.8.6
+- RocketMQ:4.9.4
 - Mysql:8.0.21
 - Redis:6.2.6
 - Minio:RELEASE.2022-01-04T07-41-07Z
