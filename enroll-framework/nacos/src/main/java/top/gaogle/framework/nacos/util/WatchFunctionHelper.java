@@ -82,6 +82,13 @@ public class WatchFunctionHelper {
         return watched_service.isEmpty() && checkPointOneByOne() == null;
     }
 
+    public static String getRunningInfo() {
+        Map<String, String> info = new LinkedHashMap<>();
+        info.put("运行中的方法", JsonUtil.object2JsonByJackson(watched_service));
+        info.put("不通过的检查点", checkPointOneByOne());
+        return JsonUtil.object2JsonByJackson(info);
+    }
+
     /**
      * 获取当前被watch的service
      *
