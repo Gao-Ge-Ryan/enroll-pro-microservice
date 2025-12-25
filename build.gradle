@@ -21,6 +21,8 @@ ext {
             collections4: '4.4',
             jsoup: '1.17.2',
             classgraph: '4.8.161',
+            rocketmq: '2.2.2',
+            rocketmqClient: '4.9.4',
     ]
 }
 

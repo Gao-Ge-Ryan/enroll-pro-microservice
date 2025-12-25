@@ -10,6 +10,7 @@ include 'enroll-framework:feign'
 include 'enroll-framework:redis'
 include 'enroll-framework:log'
 include 'enroll-framework:sentinel'
+include 'enroll-framework:nacos'
 
 include 'enroll-spi'
 include 'enroll-spi:auth'
@@ -24,4 +25,3 @@ include 'enroll-bill'
 include 'enroll-base'
 
 
-include 'enroll-framework:nacos'

@@ -5,13 +5,15 @@ dependencies {
     implementation project(':enroll-framework:feign')
     implementation project(':enroll-framework:security')
     implementation project(':enroll-framework:redis')
+    implementation project(':enroll-framework:nacos')
     implementation project(':enroll-framework:log')
     implementation project(':enroll-spi:auth')
 
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
+    implementation 'org.apache.rocketmq:rocketmq-spring-boot-starter:'+ project.dependencyVersions.rocketmq
+    implementation 'org.apache.rocketmq:rocketmq-client:'+ project.dependencyVersions.rocketmqClient
 
+
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
 

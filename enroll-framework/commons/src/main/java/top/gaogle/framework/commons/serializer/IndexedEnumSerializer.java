@@ -8,6 +8,12 @@ import top.gaogle.framework.commons.pojo.IndexedEnum;
 
 import java.io.IOException;
 
+/**
+ * 索引枚举序列化器
+ *
+ * @author gaogle
+ * @since 1.0.0
+ */
 public class IndexedEnumSerializer extends StdSerializer<IndexedEnum> {
 
     private static final long serialVersionUID = -4076094908139895557L;

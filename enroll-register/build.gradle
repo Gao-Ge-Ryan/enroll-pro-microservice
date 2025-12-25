@@ -8,9 +8,8 @@ dependencies {
     implementation project(':enroll-framework:log')
     implementation project(':enroll-framework:sentinel')
     implementation project(':enroll-spi:auth')
+    implementation project(':enroll-framework:nacos')
 
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'

@@ -1,5 +1,8 @@
 package top.gaogle.framework.nacos.annotation;
 
+import org.springframework.context.annotation.Import;
+import top.gaogle.framework.nacos.aspect.WatchFunctionAop;
+
 import java.lang.annotation.*;
 
 /**
@@ -12,6 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
+@Import(WatchFunctionAop.class)
 public @interface WatchFunction {
     String value() default ""; // 功能名称
 

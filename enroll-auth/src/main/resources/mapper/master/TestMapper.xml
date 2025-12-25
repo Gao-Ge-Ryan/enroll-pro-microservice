@@ -28,5 +28,36 @@
             delete from test_auth where id = #{id}
     </delete>
 
+    <select id="selectByPageAndCondition" resultMap="TestMap">
+        select
+        <include refid="sqlAllColumns"/>
+        from test_auth
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null">
+                and name = #{name}
+            </if>
+        </where>
+        ORDER BY
+        <choose>
+            <when test='sort == null or sort.trim == ""'>
+                create_at DESC
+            </when>
+            <otherwise>
+                `${sort}`
+                <choose>
+                    <when test='order != null and "DESC".equalsIgnoreCase(order.trim())'>
+                        DESC
+                    </when>
+                    <otherwise>
+                        ASC
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
+    </select>
+
 
 </mapper>
