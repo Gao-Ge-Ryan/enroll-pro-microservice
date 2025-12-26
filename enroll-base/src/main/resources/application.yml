@@ -95,4 +95,30 @@ redis:
           streamName: REDIS_STREAM_MQ:OPERATE_LOG
 
 
+rocketmq:
+  name-server: 127.0.0.1:9876
+
+  topic:
+    common: common-topic
+    pull: pull-topic
+    rpc: rpc-topic
+    order: order-topic
+    transaction: transaction-topic
+    delay: delay-topic
+    batch: batch-topic
+
+  producer:
+    group: group
+
+  consumer:
+    group:
+      common: common-group
+      pull: pull-group
+      rpc: rpc-group
+      order: order-group
+      transaction: transaction-group
+      delay: delay-group
+      batch: batch-group
+
+
 

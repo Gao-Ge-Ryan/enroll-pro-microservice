@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':enroll-framework:commons')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    api 'org.apache.rocketmq:rocketmq-spring-boot-starter:'+ project.dependencyVersions.rocketmq
+    api 'org.apache.rocketmq:rocketmq-client:'+ project.dependencyVersions.rocketmqClient
+}

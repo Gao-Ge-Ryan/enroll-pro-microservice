@@ -7,11 +7,11 @@ dependencies {
     implementation project(':enroll-framework:redis')
     implementation project(':enroll-framework:nacos')
     implementation project(':enroll-framework:log')
+    implementation project(':enroll-framework:rocketmq')
     implementation project(':enroll-spi:auth')
 
-    implementation 'org.apache.rocketmq:rocketmq-spring-boot-starter:'+ project.dependencyVersions.rocketmq
-    implementation 'org.apache.rocketmq:rocketmq-client:'+ project.dependencyVersions.rocketmqClient
-
+    compileOnly "org.projectlombok:lombok:" + project.dependencyVersions.lombok
+    annotationProcessor "org.projectlombok:lombok:" + project.dependencyVersions.lombok
 
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-seata'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
