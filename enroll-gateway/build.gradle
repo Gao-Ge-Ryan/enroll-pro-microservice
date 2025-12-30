@@ -8,6 +8,7 @@ dependencies {
     }
 
     implementation 'com.auth0:java-jwt:'+ project.dependencyVersions.auth0
+    implementation 'pro.fessional:kaptcha:'+ project.dependencyVersions.kaptcha
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     implementation 'org.springframework.boot:spring-boot'

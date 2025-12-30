@@ -76,7 +76,7 @@ service.interceptors.response.use(res => {
     // 未设置状态码则默认成功状态
     const code = res.data.code || 200
     // 获取错误信息
-    const msg = errorCode[code] || res.data.msg || errorCode['default']
+    const msg = errorCode[code] || res.data.message || errorCode['default']
     // 二进制数据则直接返回
     if (res.request.responseType ===  'blob' || res.request.responseType ===  'arraybuffer') {
       return res.data
@@ -104,7 +104,17 @@ service.interceptors.response.use(res => {
       ElNotification.error({ title: msg })
       return Promise.reject('error')
     } else {
-      return  Promise.resolve(res.data)
+      // 优先检查success字段
+      if (res.data.hasOwnProperty('success')) {
+        if (res.data.success === false) {
+          // success为false时弹出错误信息
+          const msg = res.data.message || '请求失败'
+          ElNotification.error({ title: msg })
+          return Promise.reject('error')
+        }
+      }
+      // success为true或无success字段时返回数据
+      return Promise.resolve(res.data)
     }
   },
   error => {

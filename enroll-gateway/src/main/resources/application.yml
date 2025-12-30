@@ -22,6 +22,9 @@ spring:
 
 
 security:
+  captcha:
+    enabled: true
+    type: math
   ignore:
     whites:
       - /api/auth/auth/login

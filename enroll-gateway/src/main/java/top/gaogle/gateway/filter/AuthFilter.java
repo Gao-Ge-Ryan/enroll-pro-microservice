@@ -18,7 +18,7 @@ import top.gaogle.framework.commons.enums.HttpStatusEnum;
 import top.gaogle.framework.commons.util.ServletUtil;
 import top.gaogle.framework.commons.util.StringUtil;
 import top.gaogle.framework.redis.service.StringRedisService;
-import top.gaogle.gateway.config.IgnoreWhiteProperties;
+import top.gaogle.gateway.property.IgnoreWhiteProperties;
 import top.gaogle.gateway.util.Auth0TokenUtil;
 
 import java.util.Map;

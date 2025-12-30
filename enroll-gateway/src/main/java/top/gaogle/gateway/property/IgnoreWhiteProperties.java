@@ -1,4 +1,4 @@
-package top.gaogle.gateway.config;
+package top.gaogle.gateway.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;

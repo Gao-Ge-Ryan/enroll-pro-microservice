@@ -393,5 +393,10 @@ public class CommonsConst {
     public static final String ALIPAY_KEYSTORE = "alipay.keystore";
     public static final String ALIPAY_CERT = "alipayCert";
 
+    /**
+     * 验证码有效期（分钟）
+     */
+    public static final long CAPTCHA_EXPIRATION = 2;
+
 
 }

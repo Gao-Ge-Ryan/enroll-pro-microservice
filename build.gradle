@@ -24,6 +24,7 @@ ext {
             rocketmq: '2.2.3',
             rocketmqClient: '4.9.4',
             lombok: '1.16.18',
+            kaptcha: '2.3.3',
     ]
 }
 
