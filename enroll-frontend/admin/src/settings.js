@@ -52,6 +52,6 @@ export default {
   /**
    * 底部版权文本内容
    */
-  footerContent: 'Copyright © 2018-2025 Enroll Pro. All Rights Reserved.'
+  footerContent: 'Copyright ©  Enroll Pro. All Rights Reserved.'
 }
 

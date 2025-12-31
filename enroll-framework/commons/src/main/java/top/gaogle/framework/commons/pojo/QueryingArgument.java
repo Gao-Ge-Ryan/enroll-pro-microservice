@@ -1,8 +1,9 @@
-package top.gaogle.framework.commons.pojo;/*
+package top.gaogle.framework.commons.pojo;
 
 
-
-
+import org.springframework.cglib.proxy.Enhancer;
+import top.gaogle.framework.commons.interceptor.QueryingArgumentInterceptor;
+import top.gaogle.framework.commons.util.PojoCopier;
 
 /**
  * 查询参数
@@ -15,6 +16,7 @@ public class QueryingArgument implements SuperQuerying {
     /**
      * 分页参数：数据索引偏移量
      */
+
     private Integer offset;
     /**
      * 分页参数：数据条数

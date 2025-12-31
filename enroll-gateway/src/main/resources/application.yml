@@ -13,6 +13,7 @@ spring:
             - Path=/api/auth/**
           filters:
             - StripPrefix=2
+            - ValidateCodeFilter
         - id: register-route
           uri: lb://enroll-register
           predicates:

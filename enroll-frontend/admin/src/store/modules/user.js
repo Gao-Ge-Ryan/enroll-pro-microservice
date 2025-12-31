@@ -3,7 +3,7 @@ import { ElMessageBox, } from 'element-plus'
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { isEmpty } from "@/utils/validate"
-import defAva from '@/assets/images/profile.jpg'
+// import defAva from '@/assets/images/profile.jpg'
 
 const useUserStore = defineStore(
   'user',
