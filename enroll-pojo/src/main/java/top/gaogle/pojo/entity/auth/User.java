@@ -1,4 +1,4 @@
-package top.gaogle.pojo.entity.register;
+package top.gaogle.pojo.entity.auth;
 
 
 import top.gaogle.framework.commons.pojo.SuperEntity;

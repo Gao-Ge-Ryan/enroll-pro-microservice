@@ -29,3 +29,4 @@ security:
   ignore:
     whites:
       - /api/auth/auth/login
+      - /api/auth/auth/register

@@ -1,24 +1,17 @@
 package top.gaogle.gateway.filter;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 import top.gaogle.framework.commons.enums.HttpStatusEnum;
 import top.gaogle.framework.commons.util.ServletUtil;
 import top.gaogle.gateway.property.CaptchaProperties;
 import top.gaogle.gateway.service.ValidateCodeService;
 
-import java.nio.CharBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -29,7 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @Component
 public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
-    private final static String[] VALIDATE_URL = new String[]{"/auth/login", "/auth/register"};
+    private final static String[] VALIDATE_URL = new String[]{"/auth/login"};
 
 
     private final ValidateCodeService validateCodeService;
@@ -58,25 +51,22 @@ public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
             }
 
             try {
-                String rspStr = resolveBodyFromRequest(request);
-                JSONObject obj = JSON.parseObject(rspStr);
-                validateCodeService.checkCaptcha(obj.getString(CODE), obj.getString(UUID));
+                AtomicReference<String> code = new AtomicReference<>();
+                AtomicReference<String> uuid = new AtomicReference<>();
+                request.getQueryParams()
+                        .forEach((k, v) -> {
+                            if (CODE.equals(k)) {
+                                code.set(v.get(0));
+                            }
+                            if (UUID.equals(k)) {
+                                uuid.set(v.get(0));
+                            }
+                        });
+                validateCodeService.checkCaptcha(code.get(), uuid.get());
             } catch (Exception e) {
                 return ServletUtil.webFluxResponseWriter(exchange.getResponse(), HttpStatusEnum.INTERNAL_SERVER_ERROR, e.getMessage());
             }
             return chain.filter(exchange);
         };
-    }
-
-    private String resolveBodyFromRequest(ServerHttpRequest serverHttpRequest) {
-        // 获取请求体
-        Flux<DataBuffer> body = serverHttpRequest.getBody();
-        AtomicReference<String> bodyRef = new AtomicReference<>();
-        body.subscribe(buffer -> {
-            CharBuffer charBuffer = StandardCharsets.UTF_8.decode(buffer.asByteBuffer());
-            DataBufferUtils.release(buffer);
-            bodyRef.set(charBuffer.toString());
-        });
-        return bodyRef.get();
     }
 }

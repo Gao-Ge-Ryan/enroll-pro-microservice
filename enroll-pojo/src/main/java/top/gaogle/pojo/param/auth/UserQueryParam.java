@@ -1,8 +1,8 @@
-package top.gaogle.pojo.param.register;
+package top.gaogle.pojo.param.auth;
 
 
-import top.gaogle.pojo.entity.register.User;
 import top.gaogle.framework.commons.pojo.SuperQuerying;
+import top.gaogle.pojo.entity.auth.User;
 
 import java.util.List;
 

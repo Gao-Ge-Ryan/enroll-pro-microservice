@@ -1,7 +1,8 @@
-package top.gaogle.pojo.model.register;
+package top.gaogle.pojo.model.auth;
 
 
-import top.gaogle.pojo.entity.register.User;
+import top.gaogle.pojo.entity.auth.User;
+import top.gaogle.pojo.model.register.RoleModel;
 
 import java.util.List;
 
