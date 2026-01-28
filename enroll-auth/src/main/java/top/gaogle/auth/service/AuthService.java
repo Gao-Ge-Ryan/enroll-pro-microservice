@@ -12,10 +12,12 @@ import top.gaogle.framework.commons.util.CaptchaGeneratorUtil;
 import top.gaogle.framework.commons.util.DateUtil;
 import top.gaogle.framework.commons.util.StringUtil;
 import top.gaogle.framework.commons.util.UniqueUtil;
+import top.gaogle.framework.security.auth.AuthUtil;
 import top.gaogle.framework.security.pojo.LoginUser;
 import top.gaogle.framework.security.service.TokenService;
 import top.gaogle.framework.security.util.SecurityUtil;
 import top.gaogle.pojo.dto.auth.RegistryDTO;
+import top.gaogle.pojo.dto.auth.UserInfoDTO;
 import top.gaogle.pojo.entity.auth.AuthenticationPacket;
 import top.gaogle.pojo.entity.auth.User;
 import top.gaogle.pojo.enums.security.AuthorityEnumConst;
@@ -73,7 +75,7 @@ public class AuthService extends SuperService {
             result.succeed().setData(rspMap);
         } catch (Exception e) {
             log.error("登录失败：", e);
-            result.failed().setMessage("登录失败，请联系管理员！");
+            result.failed().setMessage("登录失败！");
         }
         return result;
     }
@@ -107,9 +109,38 @@ public class AuthService extends SuperService {
             result.failedBadRequest().setMessage("用户名已存在");
         } catch (Exception e) {
             log.error("注册失败：", e);
-            result.failed().setMessage("注册失败，请联系管理员！");
+            result.failed().setMessage("注册失败！");
         }
         return result;
 
+    }
+
+    public I18nResult<UserInfoDTO> userInfo() {
+        I18nResult<UserInfoDTO> result = I18nResult.newInstance();
+        try {
+            String username = SecurityUtil.getUsername();
+            UserModel userModel = userMapper.selectByUsername(username);
+            UserInfoDTO userInfoDTO = new UserInfoDTO();
+            userInfoDTO.setUsername(userModel.getUsername());
+            userInfoDTO.setNickname(userModel.getNickname());
+            userInfoDTO.setUserId(userModel.getId());
+            result.succeed().setData(userInfoDTO);
+        } catch (Exception e) {
+            log.error("获取用户信息失败：", e);
+            result.failed().setMessage("获取用户信息失败！");
+        }
+        return result;
+    }
+
+    public I18nResult<Boolean> logout() {
+        I18nResult<Boolean> result = I18nResult.newInstance();
+        try {
+            AuthUtil.logout();
+            result.succeed().setData(true);
+        } catch (Exception e) {
+            log.error("登出失败：", e);
+            result.failed().setMessage("登出失败！");
+        }
+        return result;
     }
 }

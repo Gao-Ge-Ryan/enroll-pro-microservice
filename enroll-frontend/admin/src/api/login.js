@@ -36,7 +36,7 @@ export function refreshToken() {
 // 获取用户详细信息
 export function getInfo() {
   return request({
-    url: '/system/user/getInfo',
+    url: '/api/auth/auth/user_info',
     method: 'get'
   })
 }
@@ -44,7 +44,7 @@ export function getInfo() {
 // 退出方法
 export function logout() {
   return request({
-    url: '/auth/logout',
+    url: '/api/auth/auth/logout',
     method: 'delete'
   })
 }
