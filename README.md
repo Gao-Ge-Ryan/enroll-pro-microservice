@@ -92,7 +92,7 @@ crontab -l
 
 [Admin Portal](https://admin.enrollpro.top) （System administration interface for managing the system, user management, role permissions, log monitoring, etc.）
 
-You can register for a test account or use the pre-configured super administrator account (Account: 123@qq.com , Password: Hh123@qqcom).
+You can register for a test account or use the pre-configured super administrator account (Account: 3300755918@qq.com , Password: enrollpro321).
 
 ## Meeting & Contact
 
